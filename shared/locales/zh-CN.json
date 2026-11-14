@@ -140,6 +140,8 @@
   "INVALID_RULE": "规则配置无效。",
   "INVALID_PARAMS": "请求参数无效。",
   "INTERNAL": "服务暂不可用。",
+  "embassyCityOnly": "美国大使馆 PM2.5 仅覆盖北京、上海、广州、成都、沈阳。请切换城市或改选监测总站等数据源。",
+  "embassySetupHint": "使馆库尚未构建。在项目根目录运行 npm run data:embassy 后再刷新页面（约数分钟，需联网）。",
   "switchSource": "切换数据源",
   "observed": "实测",
   "model": "模型",

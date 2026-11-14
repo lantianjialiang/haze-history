@@ -140,6 +140,8 @@
   "INVALID_RULE": "The rule is invalid.",
   "INVALID_PARAMS": "The request is invalid.",
   "INTERNAL": "The service is temporarily unavailable.",
+  "embassyCityOnly": "US Embassy PM2.5 is only available for Beijing, Shanghai, Guangzhou, Chengdu, and Shenyang. Change the city or pick another PM source.",
+  "embassySetupHint": "Embassy data is not built yet. From the project root run npm run data:embassy, then reload (a few minutes; network required).",
   "switchSource": "Switch source",
   "observed": "Measured",
   "model": "Model",

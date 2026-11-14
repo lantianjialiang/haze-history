@@ -1,4 +1,5 @@
 import cityList from "../../data/cities-cn.json";
+import { embassyCityIds } from "../../shared/embassy-cities.ts";
 import { today } from "../../shared/dates.ts";
 import { presets } from "../../shared/presets.ts";
 import { parseRule, serializeRule } from "../../shared/rules.ts";
@@ -109,6 +110,13 @@ export function readSettings() {
     pmRule: rules("pmRule", "pm"),
     meteoRule: rules("meteoRule", "meteo"),
   };
+  if (
+    settings.pm === "stateair-embassy" &&
+    !embassyCityIds.has(settings.cityId)
+  ) {
+    settings.pm = sourceIds.pm[0];
+    invalid = true;
+  }
   return { settings, invalid };
 }
 export function syncSettings(

@@ -247,7 +247,16 @@ if (existsSync(join(dir, "five-cities.rar")))
 
 const files = await csvFiles(dir);
 console.log("csv files", files.length);
-const haveUci = (store.status().last ?? "") >= "2015-12-31";
+function haveUciArchive(store: EmbassyStore): boolean {
+  const row = store.db
+    .prepare(
+      `SELECT COUNT(*) AS n FROM daily
+       WHERE city_id=? AND date BETWEEN '2013-01-01' AND '2015-12-31'`,
+    )
+    .get("CN-110100") as { n: number };
+  return row.n >= 900;
+}
+const haveUci = haveUciArchive(store);
 let ingested = 0;
 for (const file of files) {
   const name = file.split(/[/\\]/).pop()!;

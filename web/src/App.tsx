@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { embassyCityIds } from "../../shared/embassy-cities.ts";
 import overview from "../../data/cities-overview.json";
 import cityList from "../../data/cities-cn.json";
 import { today } from "../../shared/dates.ts";
@@ -362,8 +363,20 @@ export function App() {
     setRoute({ settings: next, pathname, invalid: false });
   }
   function selectCity(next: CityRef) {
-    update({ cityId: next.id, view: "single" }, "/city/" + next.id);
+    const patch: Partial<Settings> = { cityId: next.id, view: "single" };
+    if (
+      settings.pm === "stateair-embassy" &&
+      !embassyCityIds.has(next.id)
+    ) {
+      patch.pm = "quotsoft-cnemc";
+    }
+    update(patch, "/city/" + next.id);
   }
+  const embassyEmpty =
+    last &&
+    settings.pm === "stateair-embassy" &&
+    embassyCityIds.has(settings.cityId) &&
+    last.data.series.pm.records.every((row) => row.pm25 == null);
   const exportChart = (kind: ChartKind | "poster") => {
     if (!last) return;
     const range = last.settings;
@@ -637,12 +650,28 @@ export function App() {
                             </option>
                           )}
                           {available.map((item) => (
-                            <option value={item.id} key={item.id}>
+                            <option
+                              value={item.id}
+                              key={item.id}
+                              disabled={
+                                key === "pm" &&
+                                item.id === "stateair-embassy" &&
+                                !embassyCityIds.has(settings.cityId)
+                              }
+                            >
                               {item.name[lang]}
                             </option>
                           ))}
                         </select>
                       </label>
+                      {key === "pm" &&
+                        settings.pm === "stateair-embassy" &&
+                        !embassyCityIds.has(settings.cityId) && (
+                          <p className="notice">{t("embassyCityOnly")}</p>
+                        )}
+                      {key === "pm" && embassyEmpty && (
+                        <p className="notice">{t("embassySetupHint")}</p>
+                      )}
                       <RuleEditor
                         rule={
                           key === "pm" ? settings.pmRule : settings.meteoRule

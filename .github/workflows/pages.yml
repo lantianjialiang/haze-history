@@ -63,6 +63,14 @@ jobs:
         env:
           NODE_OPTIONS: --experimental-sqlite
 
+      - name: Build embassy database
+        run: |
+          if [ ! -s data/embassy-history.sqlite ]; then
+            npm run data:embassy
+          fi
+        env:
+          NODE_OPTIONS: --experimental-sqlite
+
       - name: Static export and Vite build
         run: npm run build:static
         env:
