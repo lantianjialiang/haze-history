@@ -23,14 +23,12 @@ Windows 可运行 `start-local.cmd`。若 PowerShell 限制 `npm.ps1`，把命�
 若只需要在本机打开页面、不启动 Node 接口进程，可构建静态包：
 
 ```bash
-# 需先有 data/quotsoft-history.sqlite，见 docs/data-local.md
-npm run data:update      # 按需：刷新近期实测与 quotsoft 增量
-npm run data:embassy     # 按需：刷新使馆 PM2.5 历史
-npm run build:static     # 导出 JSON 到 web/public/data/ 并打包 web/dist
-npm run preview:static   # 本地静态服务预览（不要用 file:// 直接打开 dist/index.html）
+npm run data:unpack      # 从 data/bundle/*.gz 解压 SQLite（仓库已带压缩包）
+npm run build:static     # 解压 → 导出 JSON → 打包 web/dist
+npm run preview:static   # http://127.0.0.1:4173/
 ```
 
-构建会把城市和年度序列写入 `web/public/data/`，前端通过相对路径读取。更新数据后需重新执行 `build:static`。页面会提示当前为静态模式。
+**GitHub Pages**：推送后 Actions 执行同样流程（`VITE_BASE=/haze-history/` 仅在 CI 设置）。更新数据时在本机重建 SQLite，执行 `npm run data:pack`，提交 `data/bundle/*.gz`（见 [data/bundle/README.md](data/bundle/README.md)）。无需在 CI 里克隆 CN-AIR。
 
 历史图表依赖本机 `data/quotsoft-history.sqlite`（**不在 Git 中**）。构建步骤见 [docs/data-local.md](docs/data-local.md)。常用：
 

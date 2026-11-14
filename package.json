@@ -13,7 +13,9 @@
   "scripts": {
     "dev": "tsx watch --experimental-sqlite --env-file-if-exists=.env scripts/dev.ts",
     "build": "tsc --noEmit && npm run build -w web",
-    "build:static": "tsx --experimental-sqlite server/scripts/export-static.ts && npm run build -w web -- --mode static",
+    "build:static": "node scripts/build-static.mjs",
+    "data:pack": "node scripts/pack-data-bundle.mjs",
+    "data:unpack": "node scripts/unpack-data-bundle.mjs",
     "preview:static": "npx --yes serve web/dist -l 4173",
     "test": "node --experimental-sqlite node_modules/vitest/vitest.mjs run",
     "test:e2e": "playwright test",

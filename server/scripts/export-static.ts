@@ -1,4 +1,4 @@
-import { mkdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import cities from "../../data/cities-cn.json";
@@ -12,7 +12,11 @@ import { historyPath, HistoryStore } from "../quotsoft.ts";
 import { readComparison } from "../recent.ts";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
-const out = resolve(root, "web/public/data");
+const out = resolve(
+  root,
+  process.env.STATIC_DATA_OUT?.trim() || "web/public/data",
+);
+let dataRoot = out;
 
 function coverageEnd(to: string | "now") {
   return to === "now" ? today() : to;
@@ -24,7 +28,7 @@ async function writeJson(path: string, value: unknown) {
 }
 
 function hourlyShardKey(cityId: string, providerId: string, year: string) {
-  return resolve(out, "hours", cityId, providerId, year + ".json");
+  return resolve(dataRoot, "hours", cityId, providerId, year + ".json");
 }
 
 async function mergeHourlyShards(
@@ -107,7 +111,7 @@ async function exportSeries(registry: ReturnType<typeof createRegistry>) {
             meta: { ...data.meta, cacheHit: true },
           };
           await writeJson(
-            resolve(out, "series", city.id, meta.id, year + ".json"),
+            resolve(dataRoot, "series", city.id, meta.id, year + ".json"),
             payload,
           );
         } catch (error) {
@@ -143,11 +147,11 @@ async function exportHourlySqlite(
   console.log("hours", providerId, rows.length, "slots");
 }
 
-await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
+dataRoot = out;
 const registry = createRegistry(root);
-await writeJson(resolve(out, "sources.json"), registry.list());
-await writeJson(resolve(out, "recent-comparison.json"), readComparison(root));
+await writeJson(resolve(dataRoot, "sources.json"), registry.list());
+await writeJson(resolve(dataRoot, "recent-comparison.json"), readComparison(root));
 await exportSeries(registry);
 const embassy = new EmbassyStore(embassyPath(root));
 try {

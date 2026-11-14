@@ -50,31 +50,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Restore local data cache
-        id: data-cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            data/quotsoft-history.sqlite
-            data/haze.sqlite
-          key: haze-data-${{ hashFiles('data/cities-overview.json', 'server/quotsoft.ts') }}-v1
-          restore-keys: |
-            haze-data-
-
-      - name: Install Git LFS
-        if: steps.data-cache.outputs.cache-hit != 'true'
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y git-lfs
-          git lfs install
-
-      - name: Build history database
-        if: steps.data-cache.outputs.cache-hit != 'true'
-        run: |
-          npm run data:cn-air
-          HISTORY_SKIP_REMOTE=1 npm run history -- --national
-        env:
-          NODE_OPTIONS: --experimental-sqlite
+      - name: Unpack SQLite bundles
+        run: npm run data:unpack
 
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium

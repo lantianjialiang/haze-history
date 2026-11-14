@@ -11,6 +11,9 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     envDir,
     base: isStatic ? staticBase : "/",
+    build: {
+      emptyOutDir: !isStatic,
+    },
     server: {
       host: "127.0.0.1",
       port: Number(process.env.WEB_PORT ?? 5173),
