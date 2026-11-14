@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { buildApp } from "./app.ts";
 import { geocode } from "./geocode.ts";
-import { mockRegistry } from "./providers.ts";
+import { mockRegistry } from "./mock-provider.test-fixture.ts";
 import { presets } from "../shared/presets.ts";
 let app: ReturnType<typeof buildApp> | undefined;
 afterEach(async () => {
@@ -63,7 +63,7 @@ it("returns all requested days and avoids repeat provider calls", async () => {
   expect(calls).toHaveBeenCalledTimes(2);
 });
 it("reports structured parameter and provider errors and a missing-data period", async () => {
-  app = buildApp({ cachePath: ":memory:" });
+  app = buildApp({ cachePath: ":memory:", registry: mockRegistry() });
   expect((await app.inject("/api/health")).statusCode).toBe(200);
   expect(
     (await app.inject(url.replace("2013-01-03", "2013-02-29"))).json().code,

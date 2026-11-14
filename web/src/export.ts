@@ -1,6 +1,7 @@
 import type { TFunction } from "i18next";
 import { today } from "../../shared/dates.ts";
 import { ruleText } from "../../shared/rules.ts";
+import { copyright } from "../../shared/copyright.ts";
 import {
   chartHeight,
   chartOption,
@@ -104,16 +105,8 @@ export async function exportImage(
   ctx.fillStyle = c[basis];
   font(15, 700);
   const sourceKind = (key: (typeof shown)[number]) =>
-    data.series[key].providerId.startsWith("mock")
-      ? "synthetic"
-      : data.series[key].sourceType === "measured"
-        ? "observed"
-        : "model";
-  ctx.fillText(
-    shown.map((key) => t(sourceKind(key))).join(" · "),
-    pad,
-    108,
-  );
+    data.series[key].sourceType === "measured" ? "observed" : "model";
+  ctx.fillText(shown.map((key) => t(sourceKind(key))).join(" · "), pad, 108);
   const yearSummaries = shown.map((key) => {
     const latest = data.definitions[key].stats.yearly
       .filter((row) => Number(row.period) < Number(today().slice(0, 4)))
@@ -160,14 +153,29 @@ export async function exportImage(
       " · " +
       t("generated", { date: formatDate(today() + "T12:00:00+08:00") }),
   );
-  footer.push(
-    t(
-      shown.some((key) => !data.series[key].providerId.startsWith("mock"))
-        ? "recentInfo"
-        : "demoInfo",
-    ),
-  );
+  footer.push(t("recentInfo"));
+  if (kind === "calendar" || kind === "poster") {
+    const row = data.definitions[basis].stats.yearly.find(
+      (item) => item.period === String(year),
+    );
+    footer.push(
+      t("calendarTotal", {
+        year,
+        countLabel:
+          !row || row.status === "nodata"
+            ? t("nodata")
+            : new Intl.NumberFormat(options.lang).format(row.hazeDays) +
+              " " +
+              t("days"),
+      }),
+    );
+  }
+  if (shown.some((key) => data.series[key].providerId === "noaa-isd-xian")) {
+    footer.push(t("airportVisibilityNote"));
+  }
   if (options.includeWatermark) footer.push(t("brand"));
+  footer.push(t("attribution"));
+  footer.push(copyright);
   font(15);
   const footerLines = footer.flatMap((line) => wrap(ctx, line, inner));
   const footerHeight = footerLines.length * 19 + 24;

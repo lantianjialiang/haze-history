@@ -11,14 +11,8 @@ export const years = Array.from(
   (_, i) => 2013 + i,
 );
 export const sourceIds = {
-  pm: [
-    "quotsoft-cnemc",
-    "cnemc-recent",
-    "cams-recent",
-    "mock-pm-grid",
-    "mock-pm-station",
-  ],
-  meteo: ["open-meteo-recent", "mock-meteo"],
+  pm: ["quotsoft-cnemc", "cnemc-recent", "cams-recent"],
+  meteo: ["open-meteo-recent", "noaa-isd-xian"],
 } as const;
 export interface Settings {
   cityId: string;
@@ -29,6 +23,7 @@ export interface Settings {
   from: number;
   to: number;
   calendar: number;
+  basis: "pm" | "meteo";
   pmRule: RuleConfig;
   meteoRule: RuleConfig;
 }
@@ -67,10 +62,10 @@ export function readSettings() {
       },
     );
   const candidate =
-    location.pathname.match(/^\/city\/([^/]+)\/?$/)?.[1] ?? "CN-110100";
+    location.pathname.match(/^\/city\/([^/]+)\/?$/)?.[1] ?? "CN-610100";
   const cityId = cityList.some((city) => city.id === candidate)
     ? candidate
-    : ((invalid = true), "CN-110100");
+    : ((invalid = true), "CN-610100");
   let from = read("from", currentYear, numeric);
   let to = read("to", currentYear, numeric);
   if (from > to) {
@@ -95,6 +90,9 @@ export function readSettings() {
     ),
     from,
     to,
+    basis: read<Settings["basis"]>("basis", "pm", (raw) =>
+      raw === "pm" || raw === "meteo" ? raw : undefined,
+    ),
     calendar: read(
       "calendar",
       Math.max(from, Math.min(to, currentYear - 1)),
@@ -119,6 +117,7 @@ export function syncSettings(
     from: String(settings.from),
     to: String(settings.to),
     calendar: String(settings.calendar),
+    basis: settings.basis,
   });
   for (const key of ["pmRule", "meteoRule"] as const) {
     const rule = settings[key];

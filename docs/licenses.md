@@ -4,6 +4,7 @@
 
 | 来源 | 缓存、展示与衍生图 | 署名及依据 |
 |---|---|---|
+| 中国环境监测总站（quotsoft / CN-AIR 归档） | 总站实时发布系统为公开数据。本站缓存日均、在页面和导出图中展示，并在页脚署名。 | 中国环境监测总站公开发布；小时 CSV 由 [quotsoft](https://quotsoft.net/air/) 整理，[CN-AIR](https://atomgit.com/GewisLab/CN-AIR) 镜像。 |
 | Open-Meteo CAMS | 免费端点限非商业使用。数据遵守 CC BY 4.0，允许缓存、展示及衍生图，保留署名及加工说明。 | Open-Meteo / Copernicus CAMS。[服务条款](https://open-meteo.com/en/terms) · [CAMS 署名要求](https://open-meteo.com/en/docs/air-quality-api) |
 | Open-Meteo Geocoding | 免费端点限非商业使用。保存和展示 GeoNames 数据时保留来源署名。 | Open-Meteo / GeoNames。[地理编码 API](https://open-meteo.com/en/docs/geocoding-api) |
 | NOAA NCEI ISD | 可从开放档案做本地探测。国际贡献观测的公开展示、再分发及衍生图许可仍需核实数据集和上游站点条款。 | NOAA NCEI Global Hourly / Integrated Surface Database。[档案许可政策](https://www.ncei.noaa.gov/archive) |

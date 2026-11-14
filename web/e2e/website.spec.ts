@@ -9,9 +9,17 @@ for (const lang of ["zh-CN", "en"] as const) {
     await page.goto("/?lang=" + lang);
     await expect(
       page.getByRole("heading", {
-        name: zh ? "北京雾霾统计" : "Haze days in Beijing",
+        name: zh ? "西安雾霾统计" : "Haze days in Xi'an",
       }),
     ).toBeVisible();
+    await expect(page.locator(".calendar-summary")).toContainText(
+      zh ? "年雾霾合计" : "haze days",
+    );
+    await expect(page.locator(".calendar-summary")).toContainText("> 75");
+    await expect(page.locator(".site-attribution")).toContainText(
+      zh ? "中国环境监测总站" : "CNEMC",
+    );
+    await expect(page.locator(".site-footer")).toContainText("MIT License");
     const search = page.getByRole("combobox", {
       name: zh ? "查找城市" : "Find a city",
     });
@@ -32,7 +40,7 @@ for (const lang of ["zh-CN", "en"] as const) {
     await page
       .getByLabel(zh ? "数据源" : "Data source", { exact: true })
       .first()
-      .selectOption("mock-pm-station");
+      .selectOption("cnemc-recent");
     await page
       .getByLabel(zh ? "判定标准" : "Threshold", { exact: true })
       .first()
@@ -48,6 +56,18 @@ for (const lang of ["zh-CN", "en"] as const) {
         name: zh ? "多城市对比" : "City comparison",
       }),
     ).toBeVisible();
+    const cityColumn = page
+      .getByRole("columnheader")
+      .filter({
+        has: page.getByRole("button", {
+          name: zh ? "城市" : "City",
+          exact: true,
+        }),
+      });
+    await cityColumn.getByRole("button").click();
+    await expect(cityColumn).toHaveAttribute("aria-sort", "ascending");
+    await cityColumn.getByRole("button").press("Enter");
+    await expect(cityColumn).toHaveAttribute("aria-sort", "descending");
     await page
       .getByRole("button", { name: zh ? "单城市统计" : "Single city" })
       .click();
@@ -77,7 +97,7 @@ for (const lang of ["zh-CN", "en"] as const) {
     await page.reload();
     await expect(
       page.getByLabel(zh ? "数据源" : "Data source", { exact: true }).first(),
-    ).toHaveValue("mock-pm-station");
+    ).toHaveValue("cnemc-recent");
     expect(errors).toEqual([]);
   });
 }

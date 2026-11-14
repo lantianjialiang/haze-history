@@ -135,12 +135,10 @@ async function main() {
   const anchor = `${matched[1]}-${matched[2].padStart(2, "0")}-${matched[3].padStart(2, "0")} ${matched[4].padStart(2, "0")}:00:00`;
   console.log("anchor", anchor);
   const hourly = new Map<string, ReturnType<typeof buckets>>();
-  let mismatches = 0;
   for (let back = 0; back <= 30; back++) {
     const stamp = addHours(anchor, -back);
     const result = await hour(stamp);
     if (result === "mismatch") {
-      mismatches++;
       console.log("mismatch", stamp);
       continue;
     }
@@ -148,7 +146,6 @@ async function main() {
       console.log("skip", stamp);
       continue;
     }
-    mismatches = 0;
     hourly.set(stamp, buckets(result));
     console.log("hit", stamp);
   }

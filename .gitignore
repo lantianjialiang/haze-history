@@ -4,6 +4,8 @@ web/dist/
 .env
 data/*.sqlite*
 data/cn-air/
+data/archive/
+data/update-logs/
 playwright-report/
 test-results/
 *.log

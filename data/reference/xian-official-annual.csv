@@ -1,0 +1,3 @@
+year,city_id,pm25_annual_ug_m3,good_aqi_days,source_pm25,source_good_days
+2023,CN-610100,48,228,https://xaepb.xa.gov.cn/xxgk/hjzkgb/hjtjnb/1996392472522579969.html,https://www.xa.gov.cn/gk/ghjh/zfgzbg/1759409582330392578.html
+2024,CN-610100,43,241,https://xaepb.xa.gov.cn/xxgk/hjzkgb/hjtjnb/1996392472522579969.html,https://tjj.shaanxi.gov.cn/tjsj/ndsj/tjgb/gs/202506/P020250616389699615236.pdf

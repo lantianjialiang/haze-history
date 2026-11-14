@@ -1,16 +1,31 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import overview from "../../data/cities-overview.json" with { type: "json" };
+import {
+  HistoryStore,
+  historyPath,
+  parseCityCsv,
+  type CityColumn,
+} from "../quotsoft.ts";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
 const outDir = resolve(root, "data/recent");
+async function publish(path: string, value: string) {
+  const temporary = path + "." + process.pid + ".tmp";
+  await writeFile(temporary, value);
+  await rename(temporary, path);
+}
 const cities = overview as {
   id: string;
   name: { zh: string; en: string };
   lat: number;
   lon: number;
 }[];
+const cityColumns = cities.map((city) => ({
+  id: city.id,
+  name: city.name.zh,
+})) satisfies CityColumn[];
 const byName = new Map(cities.map((city) => [city.name.zh, city]));
 
 const pmBreaks: [number, number, number, number][] = [
@@ -55,10 +70,9 @@ function stampLabel(stamp: string) {
 
 function addHours(stamp: string, hours: number) {
   const parsed = Date.parse(stamp.replace(" ", "T") + "+08:00");
-  const formatted = new Date(parsed + hours * 3600000).toLocaleString(
-    "sv-SE",
-    { timeZone: "Asia/Shanghai" },
-  );
+  const formatted = new Date(parsed + hours * 3600000).toLocaleString("sv-SE", {
+    timeZone: "Asia/Shanghai",
+  });
   return formatted.slice(0, 13) + ":00:00";
 }
 
@@ -181,10 +195,10 @@ async function collectCnemc() {
   }
   return { anchor, hours, live: cityBuckets(liveRows) };
 }
-collectCnemc.cache = new Map<
+collectCnemc.cache = new Map<string, ReturnType<typeof cityBuckets>>() as Map<
   string,
   ReturnType<typeof cityBuckets>
->() as Map<string, ReturnType<typeof cityBuckets>> & { cache?: Map<string, ReturnType<typeof cityBuckets>> };
+> & { cache?: Map<string, ReturnType<typeof cityBuckets>> };
 
 interface DayValue {
   date: string;
@@ -220,7 +234,8 @@ function rollDays(
     );
     days.push({
       date,
-      pm25: pm25Hours.length >= minHours && pm25 != null ? round(pm25, 1) : null,
+      pm25:
+        pm25Hours.length >= minHours && pm25 != null ? round(pm25, 1) : null,
       pm10:
         values.filter((value) => value.pm10 != null).length >= minHours &&
         pm10 != null
@@ -247,7 +262,9 @@ function round(value: number, digits: number) {
 
 async function quotsoftDay(date: string) {
   const url =
-    "https://quotsoft.net/air/data/china_cities_" + date.replaceAll("-", "") + ".csv";
+    "https://quotsoft.net/air/data/china_cities_" +
+    date.replaceAll("-", "") +
+    ".csv";
   const response = await request(
     url,
     { headers: { "User-Agent": "haze-history-local" } },
@@ -291,7 +308,7 @@ async function quotsoftDay(date: string) {
       hours.set(id, cityHours);
     }
   }
-  return hours;
+  return { hours, text };
 }
 
 async function openMeteo(
@@ -300,8 +317,11 @@ async function openMeteo(
   range: { start: string; end: string } | { pastDays: number },
 ) {
   const chunkSize = 8;
-  const rows: { id: string; time: string[]; values: Record<string, (number | null)[]> }[] =
-    [];
+  const rows: {
+    id: string;
+    time: string[];
+    values: Record<string, (number | null)[]>;
+  }[] = [];
   for (let index = 0; index < cities.length; index += chunkSize) {
     const chunk = cities.slice(index, index + chunkSize);
     const params = new URLSearchParams({
@@ -325,16 +345,21 @@ async function openMeteo(
     );
     const payload = (await response.json()) as
       | { hourly?: { time: string[] } & Record<string, (number | null)[]> }
-      | ({ hourly?: { time: string[] } & Record<string, (number | null)[]> }[]);
+      | { hourly?: { time: string[] } & Record<string, (number | null)[]> }[];
     const list = Array.isArray(payload) ? payload : [payload];
     list.forEach((item, offset) => {
       const city = chunk[offset];
       if (!city || !item.hourly) return;
       const values: Record<string, (number | null)[]> = {};
-      for (const key of hourly.split(",")) values[key] = item.hourly![key] ?? [];
+      for (const key of hourly.split(","))
+        values[key] = item.hourly![key] ?? [];
       rows.push({ id: city.id, time: item.hourly.time, values });
     });
-    console.log("open-meteo", path.includes("air") ? "cams" : "weather", index + chunk.length);
+    console.log(
+      "open-meteo",
+      path.includes("air") ? "cams" : "weather",
+      index + chunk.length,
+    );
     await new Promise((resolve) => setTimeout(resolve, 1800));
   }
   return rows;
@@ -377,11 +402,15 @@ function pearson(pairs: [number, number][]) {
 async function main() {
   await mkdir(outDir, { recursive: true });
   const measuredHours = new Map<string, Map<string, HourValue>>();
+  const history = new HistoryStore(historyPath(root));
   let quotsoftDays = 0;
+  let archivedDays = 0;
   const today = new Date().toLocaleDateString("en-CA", {
     timeZone: "Asia/Shanghai",
   });
-  for (let back = 1; back <= 21; back++) {
+  const historyDays = process.argv.includes("--incremental") ? 7 : 21;
+  try {
+  for (let back = 1; back <= historyDays; back++) {
     const date = addHours(today + " 12:00:00", -24 * back).slice(0, 10);
     try {
       const parsed = await quotsoftDay(date);
@@ -391,19 +420,45 @@ async function main() {
         continue;
       }
       quotsoftDays++;
-      console.log("quotsoft", date, "cities", parsed.size);
-      for (const [id, hours] of parsed) {
+      console.log("quotsoft", date, "cities", parsed.hours.size);
+      for (const [id, hours] of parsed.hours) {
         const city = measuredHours.get(id) ?? new Map();
         for (const [stamp, value] of hours) city.set(stamp, value);
         measuredHours.set(id, city);
       }
+      if (!history.done(date, "cities-national") && !history.done(date, "cities")) {
+        const rows = parseCityCsv(parsed.text, cityColumns, true).filter(
+          (row) => row.date === date,
+        );
+        await history.saveDay(
+          date,
+          "cities-national",
+          "ok",
+          rows,
+          Buffer.byteLength(parsed.text),
+        );
+        archivedDays++;
+        console.log("archived", date, "rows", rows.length);
+      }
     } catch (error) {
-      console.log("quotsoft fail", date, error instanceof Error ? error.message : error);
+      console.log(
+        "quotsoft fail",
+        date,
+        error instanceof Error ? error.message : error,
+      );
       if (quotsoftDays === 0) break;
     }
   }
 
-  const cnemc = await collectCnemc();
+  const cnemc = await collectCnemc().catch((error: unknown) => {
+    console.error(
+      "CNEMC live unavailable; continuing with archive and models",
+      error,
+    );
+    process.exitCode = 1;
+    const live: ReturnType<typeof cityBuckets> = new Map();
+    return { anchor: null, hours: [], live };
+  });
   for (const [stamp, buckets] of collectCnemc.cache ?? []) {
     for (const [id, bucket] of buckets) {
       const city = measuredHours.get(id) ?? new Map();
@@ -413,7 +468,9 @@ async function main() {
         pm10: mean(bucket.pm10) == null ? null : round(mean(bucket.pm10)!, 1),
         aqi: mean(bucket.aqi) == null ? null : Math.round(mean(bucket.aqi)!),
         pm25_24h:
-          mean(bucket.pm25_24h) == null ? null : round(mean(bucket.pm25_24h)!, 1),
+          mean(bucket.pm25_24h) == null
+            ? null
+            : round(mean(bucket.pm25_24h)!, 1),
         stations: bucket.pm25.length,
       });
       measuredHours.set(id, city);
@@ -435,14 +492,14 @@ async function main() {
       rollDays(measuredHours.get(city.id) ?? new Map(), 12, false),
     ]),
   );
-  const camsStart = "2026-10-15";
-  const camsEnd = addHours(cnemc.anchor, -24).slice(0, 10);
+  const camsEnd = addHours(today + " 12:00:00", -24).slice(0, 10);
+  const camsStart = addHours(today + " 12:00:00", -31 * 24).slice(0, 10);
   const camsRows = await openMeteo(
     "https://air-quality-api.open-meteo.com/v1/air-quality",
     "pm2_5,pm10",
     { start: camsStart, end: camsEnd },
   );
-  const cams = Object.fromEntries(
+  const camsFresh = Object.fromEntries(
     camsRows.map((row) => [
       row.id,
       daysFromHourly(row.time, row.values, 18, (hour) => ({
@@ -454,6 +511,26 @@ async function main() {
       })),
     ]),
   );
+  const camsPath = resolve(outDir, "cams.json");
+  const camsArchive = await readFile(camsPath, "utf8").then(
+    (raw) => JSON.parse(raw) as { cities?: typeof camsFresh },
+    (error: NodeJS.ErrnoException) => {
+      if (error.code !== "ENOENT") throw error;
+      return { cities: {} as typeof camsFresh };
+    },
+  );
+  const cams: typeof camsFresh = { ...(camsArchive.cities ?? {}) };
+  for (const [id, days] of Object.entries(camsFresh)) {
+    const byDay = new Map(
+      (cams[id] ?? [])
+        .filter((day) => day.date < today)
+        .map((day) => [day.date, day]),
+    );
+    for (const day of days) {
+      if (day.date < today && day.pm25 != null) byDay.set(day.date, day);
+    }
+    cams[id] = [...byDay.values()].sort((a, b) => a.date.localeCompare(b.date));
+  }
   const weatherRows = await openMeteo(
     "https://api.open-meteo.com/v1/forecast",
     "relative_humidity_2m,visibility",
@@ -484,6 +561,39 @@ async function main() {
       ];
     }),
   );
+  const meteoPath = resolve(outDir, "meteo.json");
+  if (
+    !Object.values(meteo).some((days) =>
+      days.some(
+        (day) =>
+          day.date < today && day.visibility_km != null && day.rh != null,
+      ),
+    )
+  ) {
+    throw new Error("No complete historical weather model days returned");
+  }
+  const archive = await readFile(meteoPath, "utf8").then(
+    (raw) => JSON.parse(raw) as { cities: typeof meteo },
+    (error: NodeJS.ErrnoException) => {
+      if (error.code !== "ENOENT") throw error;
+      return { cities: {} as typeof meteo };
+    },
+  );
+  const weatherHistory = { ...archive.cities };
+  for (const [id, days] of Object.entries(meteo)) {
+    const byDay = new Map(
+      (weatherHistory[id] ?? [])
+        .filter((day) => day.date < today)
+        .map((day) => [day.date, day]),
+    );
+    for (const day of days) {
+      if (day.date < today && day.visibility_km != null && day.rh != null)
+        byDay.set(day.date, day);
+    }
+    weatherHistory[id] = [...byDay.values()].sort((a, b) =>
+      a.date.localeCompare(b.date),
+    );
+  }
 
   const cams24 = new Map(
     camsRows.map((row) => {
@@ -510,7 +620,10 @@ async function main() {
     );
     const overlap = [...measuredDays]
       .filter(([date]) => modelDays.has(date))
-      .map(([date, day]) => [day.pm25!, modelDays.get(date)!.pm25!] as [number, number]);
+      .map(
+        ([date, day]) =>
+          [day.pm25!, modelDays.get(date)!.pm25!] as [number, number],
+      );
     const snap = latestSnapshot.find((item) => item.id === city.id);
     return {
       id: city.id,
@@ -540,28 +653,59 @@ async function main() {
     cams: { from: camsStart, to: camsEnd },
     cities: comparison,
   };
-  await writeFile(
+  const snapshotDir = resolve(root, "data/archive");
+  await mkdir(snapshotDir, { recursive: true });
+  const snapshotId = payload.fetchedAt.replace(/[:.]/g, "-") + "-" + process.pid;
+  // Archive the exact inputs to publication before replacing any current view.
+  await publish(resolve(snapshotDir, snapshotId + ".json"), JSON.stringify({
+    metadata: payload,
+    measured,
+    cams,
+    meteo: Object.fromEntries(Object.entries(meteo).map(([id, days]) => [
+      id, days.filter(day => day.date < today),
+    ])),
+  }));
+  await publish(
     resolve(outDir, "measured.json"),
-    JSON.stringify({ fetchedAt: payload.fetchedAt, anchor: cnemc.anchor, cities: measured }),
+    JSON.stringify({
+      fetchedAt: payload.fetchedAt,
+      anchor: cnemc.anchor,
+      cities: measured,
+    }),
   );
-  await writeFile(
-    resolve(outDir, "cams.json"),
-    JSON.stringify({ fetchedAt: payload.fetchedAt, from: camsStart, to: camsEnd, cities: cams }),
+  await publish(
+    camsPath,
+    JSON.stringify({
+      fetchedAt: payload.fetchedAt,
+      from: camsStart,
+      to: camsEnd,
+      cities: cams,
+    }),
   );
-  await writeFile(
-    resolve(outDir, "meteo.json"),
-    JSON.stringify({ fetchedAt: payload.fetchedAt, from: camsStart, to: camsEnd, cities: meteo }),
+  await publish(
+    meteoPath,
+    JSON.stringify({ fetchedAt: payload.fetchedAt, cities: weatherHistory }),
   );
-  await writeFile(resolve(outDir, "comparison.json"), JSON.stringify(payload, null, 2));
+  await publish(
+    resolve(outDir, "comparison.json"),
+    JSON.stringify(payload, null, 2),
+  );
   console.log(
     "done",
     "quotsoftDays",
     quotsoftDays,
+    "archived",
+    archivedDays,
     "cnemcHours",
     cnemc.hours.length,
     "compared",
     comparison.filter((city) => city.overlapDays > 0).length,
+    "history",
+    history.status(),
   );
+  } finally {
+    history.close();
+  }
 }
 
 if (process.argv[1] && dirname(process.argv[1]).endsWith("spike") === false)

@@ -574,6 +574,18 @@ input[type="number"] {
   font-size: 12px;
   margin: 5px 0 9px;
 }
+.calendar-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 16px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--tint);
+  color: var(--ink);
+  font-size: 13px;
+}
 .legend-strip span {
   display: flex;
   gap: 5px;
@@ -702,14 +714,24 @@ th {
   margin: 12px 0;
 }
 .site-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
+  display: grid;
+  gap: 8px;
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 12px;
   margin-top: 25px;
   padding: 13px 0 25px;
+}
+.site-footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+}
+.site-attribution {
+  margin: 0;
+  max-width: 52rem;
+  line-height: 1.55;
 }
 dialog {
   border: 1px solid var(--line);
@@ -875,4 +897,15 @@ dialog::backdrop {
   *::after {
     animation: none !important;
   }
+}
+.sort-header {
+  background: transparent;
+  color: inherit;
+  border: 0;
+  padding: 4px 0;
+  text-align: left;
+  font-weight: 700;
+}
+.sort-header span {
+  color: var(--accent);
 }

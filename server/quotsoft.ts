@@ -55,7 +55,11 @@ function lastDefined(values: (number | null)[]) {
   return null;
 }
 
-function summarize(date: string, cityId: string, hours: HourBucket): DailyValue {
+function summarize(
+  date: string,
+  cityId: string,
+  hours: HourBucket,
+): DailyValue {
   const pm25Hours = hours.pm25.filter((value) => value != null) as number[];
   const pm10Hours = hours.pm10.filter((value) => value != null) as number[];
   const aqiHours = hours.aqi.filter((value) => value != null) as number[];
@@ -63,7 +67,7 @@ function summarize(date: string, cityId: string, hours: HourBucket): DailyValue 
   const fallback = lastDefined(hours.pm25_24h);
   const pm25 = enough
     ? round(mean(pm25Hours))
-    : fallback ?? (pm25Hours.length ? round(mean(pm25Hours)) : null);
+    : (fallback ?? (pm25Hours.length ? round(mean(pm25Hours)) : null));
   const pm10 =
     pm10Hours.length >= MIN_HOURS
       ? round(mean(pm10Hours))
@@ -113,11 +117,23 @@ export function cityIndex(header: string[], cities: CityColumn[]) {
   return indexes;
 }
 
-export function parseCityCsv(text: string, cities: CityColumn[]): DailyValue[] {
+export function parseCityCsv(
+  text: string,
+  cities: CityColumn[],
+  includeUnmapped = false,
+): DailyValue[] {
   const lines = text.split(/\r?\n/).filter((line) => line.trim());
   if (lines.length < 2) return [];
   const header = lines[0].split(",");
   const indexes = cityIndex(header, cities);
+  if (includeUnmapped) {
+    const matched = new Set(indexes.values());
+    header.slice(3).forEach((name, offset) => {
+      const label = name.trim();
+      if (label && !matched.has(offset + 3))
+        indexes.set("CNEMC:" + label, offset + 3);
+    });
+  }
   const hours = new Map<string, HourBucket>();
   for (const [id] of indexes) hours.set(id, emptyBucket());
   for (const line of lines.slice(1)) {
@@ -146,7 +162,10 @@ export function parseCityCsv(text: string, cities: CityColumn[]): DailyValue[] {
   return [...hours].map(([id, bucket]) => summarize(date, id, bucket));
 }
 
-export function parseBeijingCsv(text: string, cityId = "CN-110100"): DailyValue[] {
+export function parseBeijingCsv(
+  text: string,
+  cityId = "CN-110100",
+): DailyValue[] {
   const lines = text.split(/\r?\n/).filter((line) => line.trim());
   if (lines.length < 2) return [];
   const header = lines[0].split(",");
@@ -284,16 +303,21 @@ export class HistoryStore {
   }
   status() {
     const days = this.db
-      .prepare(
-        "SELECT status, COUNT(*) AS n FROM days GROUP BY status",
-      )
+      .prepare("SELECT status, COUNT(*) AS n FROM days GROUP BY status")
       .all() as { status: string; n: number }[];
     const range = this.db
-      .prepare("SELECT MIN(date) AS first, MAX(date) AS last, COUNT(*) AS n FROM daily")
+      .prepare(
+        "SELECT MIN(date) AS first, MAX(date) AS last, COUNT(*) AS n FROM daily",
+      )
       .get() as { first: string | null; last: string | null; n: number };
     return {
       days: Object.fromEntries(days.map((row) => [row.status, row.n])),
       records: range.n,
+      cities: (
+        this.db
+          .prepare("SELECT COUNT(DISTINCT city_id) AS n FROM daily")
+          .get() as { n: number }
+      ).n,
       first: range.first,
       last: range.last,
     };
@@ -310,6 +334,13 @@ export class HistoryStore {
       aqi: number | null;
       valid_hours: number | null;
     }[];
+  }
+  cityCoverage() {
+    return this.db
+      .prepare(
+        "SELECT city_id AS cityId, MIN(date) AS first, MAX(date) AS last, COUNT(pm25) AS pm25Days, COUNT(aqi) AS aqiDays FROM daily GROUP BY city_id ORDER BY city_id",
+      )
+      .all();
   }
 }
 
@@ -338,9 +369,7 @@ export class QuotsoftProvider implements DataProvider {
       requested.includes(metric),
     );
     const rows = new Map(
-      this.store
-        .cityDays(city.id, from, to)
-        .map((row) => [row.date, row]),
+      this.store.cityDays(city.id, from, to).map((row) => [row.date, row]),
     );
     const records = [...dateRange(from, to)].map((date) => {
       const record = emptyDay(date);

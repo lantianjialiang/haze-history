@@ -11,7 +11,7 @@ export default defineConfig({
     acceptDownloads: true,
   },
   webServer: {
-    command: "npm run dev",
+    command: "node --experimental-sqlite --env-file-if-exists=.env --import tsx scripts/dev.ts",
     wait: { stdout: /Local: (?<haze_test_url>http:\/\/127\.0\.0\.1:\d+\/)/ },
     timeout: 30_000,
   },

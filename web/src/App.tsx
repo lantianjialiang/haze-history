@@ -3,7 +3,12 @@ import { useTranslation } from "react-i18next";
 import overview from "../../data/cities-overview.json";
 import cityList from "../../data/cities-cn.json";
 import { today } from "../../shared/dates.ts";
-import { classifyDays, serializeRule } from "../../shared/rules.ts";
+import { classifyDays, ruleText, serializeRule } from "../../shared/rules.ts";
+import { presets } from "../../shared/presets.ts";
+import { copyright } from "../../shared/copyright.ts";
+import licenseUrl from "../../LICENSE?url";
+import { compareBases } from "../../shared/overlap.ts";
+import { DataMethods, comparisonColumns } from "./DataMethods.tsx";
 import type {
   ApiError,
   CityRef,
@@ -30,6 +35,7 @@ import {
 
 const bases = ["pm", "meteo"] as const;
 const popular = [
+  "610100",
   "110100",
   "310100",
   "510100",
@@ -86,9 +92,29 @@ function ComparisonTable({
   lang: "zh" | "en";
 }) {
   const { t } = useTranslation();
-  const rows = [...(data?.cities ?? [])].sort(
-    (a, b) => (b.latest?.pm25_24h ?? -1) - (a.latest?.pm25_24h ?? -1),
-  );
+  const [sort, setSort] = useState<{
+    column: keyof typeof comparisonColumns;
+    ascending: boolean;
+  }>({
+    column: "colPm24",
+    ascending: false,
+  });
+  const collator = new Intl.Collator(lang === "zh" ? "zh-CN" : "en");
+  const value = comparisonColumns[sort.column];
+  const rows = [...(data?.cities ?? [])].sort((a, b) => {
+    const left = value(a, lang);
+    const right = value(b, lang);
+    if (left == null || right == null)
+      return Number(left == null) - Number(right == null);
+    const order =
+      typeof left === "number" && typeof right === "number"
+        ? left - right
+        : collator.compare(String(left), String(right));
+    return (
+      (sort.ascending ? order : -order) ||
+      collator.compare(a.name[lang], b.name[lang])
+    );
+  });
   const nf = new Intl.NumberFormat(lang === "zh" ? "zh-CN" : "en", {
     maximumFractionDigits: 1,
   });
@@ -118,15 +144,46 @@ function ComparisonTable({
           <table>
             <thead>
               <tr>
-                <th>{t("colCity")}</th>
-                <th>{t("colPm")}</th>
-                <th>{t("colPm24")}</th>
-                <th>{t("colAqi")}</th>
-                <th>{t("colCams24")}</th>
-                <th>{t("colBias")}</th>
-                <th>{t("colOverlap")}</th>
-                <th>{t("colOver75")}</th>
-                <th>{t("colModelOver75")}</th>
+                {(
+                  Object.keys(
+                    comparisonColumns,
+                  ) as (keyof typeof comparisonColumns)[]
+                ).map((column) => (
+                  <th
+                    key={column}
+                    scope="col"
+                    aria-sort={
+                      sort.column === column
+                        ? sort.ascending
+                          ? "ascending"
+                          : "descending"
+                        : undefined
+                    }
+                  >
+                    <button
+                      type="button"
+                      className="sort-header"
+                      onClick={() =>
+                        setSort({
+                          column,
+                          ascending:
+                            sort.column === column
+                              ? !sort.ascending
+                              : column === "colCity",
+                        })
+                      }
+                    >
+                      {t(column)}{" "}
+                      <span aria-hidden="true">
+                        {sort.column === column
+                          ? sort.ascending
+                            ? "↑"
+                            : "↓"
+                          : "↕"}
+                      </span>
+                    </button>
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -140,10 +197,14 @@ function ComparisonTable({
                   <td>{num(row.bias)}</td>
                   <td>{row.overlapDays}</td>
                   <td>
-                    {row.measuredOver75}/{row.overlapDays}
+                    {row.overlapDays
+                      ? row.measuredOver75 + "/" + row.overlapDays
+                      : "—"}
                   </td>
                   <td>
-                    {row.modelOver75}/{row.overlapDays}
+                    {row.overlapDays
+                      ? row.modelOver75 + "/" + row.overlapDays
+                      : "—"}
                   </td>
                 </tr>
               ))}
@@ -168,7 +229,8 @@ export function App() {
   const [theme, setTheme] = useState<Theme>(() =>
     stored("haze.theme") === "dark" ? "dark" : "light",
   );
-  const [basis, setBasis] = useState<Basis>("pm");
+  const basis = settings.basis;
+  const setBasis = (basis: Basis) => update({ basis });
   const [exportTarget, setExport] = useState<ExportTarget>();
   const [attempt, setAttempt] = useState(0);
   const [sources, setSources] = useState<ProviderMeta[]>([]);
@@ -312,6 +374,13 @@ export function App() {
         Math.min(last.settings.to, settings.calendar),
       )
     : settings.calendar;
+  const overlap =
+    last &&
+    compareBases(
+      last.data.definitions.pm.days,
+      last.data.definitions.meteo.days,
+      chartYear,
+    );
   const yearPicker = (
     <label className="inline-field">
       {t("year")}{" "}
@@ -337,7 +406,7 @@ export function App() {
             href="/"
             onClick={(e) => {
               e.preventDefault();
-              update({ cityId: "CN-110100", view: "single" }, "/");
+              update({ cityId: "CN-610100", view: "single" }, "/");
             }}
           >
             <span className="brand-mark">
@@ -391,7 +460,39 @@ export function App() {
           <p>{t("notesIntro")}</p>
           <p>{t("modelNotes")}</p>
           <p>{t("thresholdNotes")}</p>
+          <h2>{t("glossary")}</h2>
+          <dl>
+            {(
+              [
+                "pm25",
+                "pm10",
+                "aqi",
+                "visibility_km",
+                "rh",
+                "coverage",
+              ] as const
+            ).map((metric) => (
+              <div key={metric}>
+                <dt>
+                  <strong>{t(metric)}</strong>
+                </dt>
+                <dd>
+                  <p>{t("definition_" + metric)}</p>
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <h2>{t("rule")}</h2>
+          <ul>
+            {presets.map((rule) => (
+              <li key={rule.id}>
+                {rule.name[lang]} · {ruleText(rule, t, t(rule.combine))}
+              </li>
+            ))}
+          </ul>
+          <p>{t("ruleLogic")}</p>
           <p>{t("qualityNotes", { coverage: percent.format(0.8) })}</p>
+          <DataMethods />
           <h2>{t("providerNotes")}</h2>
           <ul>
             {ipSources.map((source) => (
@@ -401,7 +502,6 @@ export function App() {
             ))}
           </ul>
           <p>{t("recentInfo")}</p>
-          <p>{t("demoInfo")}</p>
         </main>
       ) : (
         <main className="shell">
@@ -484,12 +584,8 @@ export function App() {
           </div>
           <div className="notice" role="status">
             <Icon name="info" />
-            <strong>
-              {t(settings.pm.startsWith("mock") ? "demo" : "observed")}
-            </strong>
-            <span>
-              {t(settings.pm.startsWith("mock") ? "demoInfo" : "recentInfo")}
-            </span>
+            <strong>{t("source")}</strong>
+            <span>{t("recentInfo")}</span>
           </div>
           {route.invalid && (
             <p role="status" className="notice">
@@ -528,7 +624,9 @@ export function App() {
                           onChange={(e) => update({ [key]: e.target.value })}
                         >
                           {!source && (
-                            <option value={settings[key]}>{t("demo")}</option>
+                            <option value={settings[key]}>
+                              {t("loading")}
+                            </option>
                           )}
                           {available.map((item) => (
                             <option value={item.id} key={item.id}>
@@ -756,6 +854,16 @@ export function App() {
                       onBasis={setBasis}
                       yearPicker={yearPicker}
                     />
+                    {overlap && (
+                      <section className="surface chart-card">
+                        <h2>{t("overlapTitle", { year: chartYear })}</h2>
+                        <p>
+                          {overlap.valid
+                            ? t("overlapCounts", overlap)
+                            : t("overlapEmpty")}
+                        </p>
+                      </section>
+                    )}
                   </div>
                 )}
               </section>
@@ -764,11 +872,17 @@ export function App() {
         </main>
       )}
       <footer className="shell site-footer">
-        <span>
-          <Icon name="wind" />
-          {t("brand")}
-        </span>
-        <span>{t("footer")}</span>
+        <div className="site-footer-row">
+          <span>
+            <Icon name="wind" />
+            {t("brand")}
+          </span>
+          <span>{t("footer")}</span>
+          <a href={licenseUrl} download="LICENSE">
+            {copyright}
+          </a>
+        </div>
+        <p className="site-attribution">{t("attribution")}</p>
       </footer>
       {exportTarget && (
         <ExportDialog

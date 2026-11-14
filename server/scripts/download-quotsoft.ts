@@ -20,15 +20,14 @@ const cities = (overview as { id: string; name: { zh: string } }[]).map(
 ) satisfies CityColumn[];
 const store = new HistoryStore(historyPath(root));
 const yesterday = shiftDate(today(), -1);
+const incremental = process.argv.includes("--incremental");
+const national = process.argv.includes("--national") || incremental;
+const mode = national ? "cities-national" : "cities";
 const concurrency = Number(process.env.HISTORY_CONCURRENCY ?? 2);
 const pauseMs = Number(process.env.HISTORY_DELAY_MS ?? 250);
 const base = "https://quotsoft.net/air/data/";
 
-async function request(
-  url: string,
-  init: RequestInit,
-  timeout = 20000,
-) {
+async function request(url: string, init: RequestInit, timeout = 20000) {
   let last: unknown;
   for (let attempt = 0; attempt < 6; attempt++) {
     try {
@@ -43,7 +42,8 @@ async function request(
       if (response.status === 404) return response;
       if (response.status === 429) {
         const retryAfter = Number(response.headers.get("retry-after"));
-        const wait = (Number.isFinite(retryAfter) ? retryAfter : 8 + attempt * 4) * 1000;
+        const wait =
+          (Number.isFinite(retryAfter) ? retryAfter : 8 + attempt * 4) * 1000;
         await new Promise((resolve) => setTimeout(resolve, wait));
         last = new Error("HTTP 429");
         continue;
@@ -62,7 +62,8 @@ async function request(
 async function download(url: string) {
   try {
     const response = await request(url, { method: "GET" }, 60000);
-    if (response.status === 404) return { status: "missing" as const, buffer: null };
+    if (response.status === 404)
+      return { status: "missing" as const, buffer: null };
     return {
       status: "ok" as const,
       buffer: Buffer.from(await response.arrayBuffer()),
@@ -80,18 +81,23 @@ async function download(url: string) {
     ranges.push([start, Math.min(size - 1, start + step - 1)]);
   const parts: Buffer[] = [];
   for (const [start, end] of ranges) {
-      const response = await request(
-        url,
-        { headers: { Range: `bytes=${start}-${end}` } },
-        45000,
-      );
-    if (response.status === 404) return { status: "missing" as const, buffer: null };
+    const response = await request(
+      url,
+      { headers: { Range: `bytes=${start}-${end}` } },
+      45000,
+    );
+    if (response.status === 404)
+      return { status: "missing" as const, buffer: null };
     parts.push(Buffer.from(await response.arrayBuffer()));
   }
   return { status: "ok" as const, buffer: Buffer.concat(parts) };
 }
 
-async function pool<T>(items: T[], limit: number, work: (item: T) => Promise<void>) {
+async function pool<T>(
+  items: T[],
+  limit: number,
+  work: (item: T) => Promise<void>,
+) {
   let index = 0;
   await Promise.all(
     Array.from({ length: Math.min(limit, items.length) }, async () => {
@@ -103,11 +109,12 @@ async function pool<T>(items: T[], limit: number, work: (item: T) => Promise<voi
   );
 }
 
-async function ingest(
-  kind: "cities" | "beijing",
-  dates: string[],
-) {
-  const pending = dates.filter((date) => !store.done(date, kind));
+async function ingest(kind: "cities" | "beijing", dates: string[]) {
+  const checkpoint = kind === "cities" ? mode : kind;
+  const retryFrom = shiftDate(yesterday, -6);
+  const pending = dates.filter(
+    (date) => date >= retryFrom || !store.done(date, checkpoint),
+  );
   console.log(kind, "todo", pending.length, "/", dates.length);
   let ok = 0;
   let missing = 0;
@@ -123,20 +130,37 @@ async function ingest(
       console.log("get", kind, date);
       const result = await download(base + file);
       if (result.status === "missing" || !result.buffer) {
-        await store.saveDay(date, kind, "missing", []);
+        if (!store.done(date, checkpoint))
+          await store.saveDay(date, checkpoint, "missing", []);
         missing++;
         return;
       }
       const text = result.buffer.toString("utf8");
       const rows =
         kind === "cities"
-          ? parseCityCsv(text, cities)
+          ? parseCityCsv(text, cities, national)
           : parseBeijingCsv(text);
-      await store.saveDay(date, kind, "ok", rows, result.buffer.length);
+      if (
+        !rows.some(
+          (row) =>
+            row.date === date &&
+            (row.pm25 != null || row.aqi != null || row.pm10 != null),
+        )
+      ) {
+        throw new Error("No valid readings for " + date);
+      }
+      await store.saveDay(
+        date,
+        checkpoint,
+        "ok",
+        rows.filter((row) => row.date === date),
+        result.buffer.length,
+      );
       ok++;
       await new Promise((resolve) => setTimeout(resolve, pauseMs));
     } catch (error) {
-      await store.saveDay(date, kind, "error", []);
+      if (!store.done(date, checkpoint))
+        await store.saveDay(date, checkpoint, "error", []);
       failed++;
       console.log(
         "fail",
@@ -166,6 +190,7 @@ async function ingest(
       );
     }
   });
+  if (failed > 0) process.exitCode = 1;
 }
 
 async function walkCityFiles(dir: string): Promise<string[]> {
@@ -188,14 +213,28 @@ async function ingestLocal() {
     const stamp = file.match(/china_cities_(\d{8})\.csv$/)?.[1];
     if (!stamp) continue;
     const date = `${stamp.slice(0, 4)}-${stamp.slice(4, 6)}-${stamp.slice(6, 8)}`;
-    if (store.done(date, "cities")) continue;
+    if (store.done(date, mode)) continue;
     const text = await readFile(file, "utf8");
     if (text.startsWith("version https://git-lfs.github.com")) {
       console.log("lfs pointer", date);
       continue;
     }
-    const rows = parseCityCsv(text, cities);
-    await store.saveDay(date, "cities", "ok", rows, Buffer.byteLength(text));
+    const rows = parseCityCsv(text, cities, national);
+    if (
+      !rows.some(
+        (row) =>
+          row.date === date &&
+          (row.pm25 != null || row.aqi != null || row.pm10 != null),
+      )
+    )
+      continue;
+    await store.saveDay(
+      date,
+      mode,
+      "ok",
+      rows.filter((row) => row.date === date),
+      Buffer.byteLength(text),
+    );
     ok++;
     if (ok % 50 === 0) console.log("local", ok, date, store.status());
   }
@@ -203,10 +242,31 @@ async function ingestLocal() {
 }
 
 const beijingDates = [...dateRange(BEIJING_START, shiftDate(CITIES_START, -1))];
-const cityDates = [...dateRange(CITIES_START, yesterday)];
-await ingest("beijing", beijingDates);
-await ingestLocal();
-if (process.env.HISTORY_SKIP_REMOTE !== "1")
-  await ingest("cities", cityDates);
+const requestedFrom = process.argv
+  .find((arg) => arg.startsWith("--from="))
+  ?.slice(7);
+if (
+  requestedFrom &&
+  (!/^\d{4}-\d{2}-\d{2}$/.test(requestedFrom) ||
+    requestedFrom < CITIES_START ||
+    requestedFrom > yesterday ||
+    shiftDate(requestedFrom, 0) !== requestedFrom)
+) {
+  throw new Error(
+    "--from must be a valid date from 2014-05-13 through yesterday",
+  );
+}
+const cityDates = [
+  ...dateRange(
+    requestedFrom ?? (incremental ? shiftDate(yesterday, -6) : CITIES_START),
+    yesterday,
+  ),
+];
+if (!incremental) {
+  if (!requestedFrom && process.env.HISTORY_SKIP_REMOTE !== "1")
+    await ingest("beijing", beijingDates);
+  if (!requestedFrom) await ingestLocal();
+}
+if (process.env.HISTORY_SKIP_REMOTE !== "1") await ingest("cities", cityDates);
 console.log("finished", store.status());
 store.close();

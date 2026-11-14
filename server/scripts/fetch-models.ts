@@ -129,7 +129,7 @@ for (const row of camsRows) {
   const window = recent.slice(-24);
   cams24h[row.id] = window.length >= 18 ? round(mean(window)) : null;
 }
-let meteoCities: Record<string, unknown[]> = {};
+const meteoCities: Record<string, unknown[]> = {};
 try {
   const weather = await batch(
     "https://api.open-meteo.com/v1/forecast",

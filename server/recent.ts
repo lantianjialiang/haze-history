@@ -42,6 +42,7 @@ class SnapshotProvider implements DataProvider {
     readonly meta: DataProvider["meta"],
     private values: Map<string, Map<string, Partial<DailyRecord>>>,
     private fetchedAt: string,
+    private stationInfo?: SeriesResponse["meta"]["stationInfo"],
   ) {}
   async getDailySeries(
     city: CityRef,
@@ -73,6 +74,7 @@ class SnapshotProvider implements DataProvider {
       meta: {
         fetchedAt: this.fetchedAt,
         cacheHit: false,
+        stationInfo: days ? this.stationInfo : undefined,
         missingRateByYear: missingRate(records, metricsReturned),
       },
     };
@@ -188,5 +190,36 @@ export function readComparison(root: string) {
       fetchedAt: null,
       cities: [],
     }
+  );
+}
+
+export function registerXianVisibility(
+  registry: ProviderRegistry,
+  root: string,
+) {
+  const bundle = readJson<Bundle<MeteoDay>>(
+    resolve(root, "data/reference/xian-isd-daily.json"),
+  );
+  const days = bundle?.cities?.["CN-610100"];
+  if (!days?.length || !bundle?.fetchedAt) return;
+  registry.register(
+    new SnapshotProvider(
+      {
+    id: "noaa-isd-xian",
+    name: { zh: "NOAA 西安站 · 2023–2024", en: "NOAA Xi’an station · 2023–2024" },
+        sourceType: "measured",
+        metrics: ["visibility_km", "rh"],
+    coverage: { from: days[0].date, to: days[days.length - 1].date },
+        requiresKey: false,
+        license: "NOAA NCEI Integrated Surface Database",
+        notes: {
+          zh: "机场单站，湿度由气温和露点推算，每日至少 18 个配对小时。大量能见度记录集中在 9.9 km，霾日仅供探索。",
+          en: "Airport station. Humidity is derived from temperature and dew point, with at least 18 paired hours. Many visibility observations cluster at 9.9 km; haze counts are exploratory.",
+        },
+      },
+      new Map([["CN-610100", new Map(days.map((day) => [day.date, day]))]]),
+      bundle.fetchedAt,
+      { id: "57036099999", name: "WMO 57036", distanceKm: 21 },
+    ),
   );
 }

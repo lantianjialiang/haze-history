@@ -18,12 +18,12 @@ On Windows, `start-local.cmd` installs missing dependencies and starts both serv
 Historical charts need `data/quotsoft-history.sqlite`. If that file is missing, run:
 
 ```bash
-npm run history
+npm run history -- --national
 ```
 
 That command ingests a local `data/cn-air` clone when present, then downloads remaining days from quotsoft. Optional env vars: `HISTORY_SKIP_REMOTE=1`, `HISTORY_CONCURRENCY=4`, `HISTORY_DELAY_MS=200`.
 
-Refresh the last few measured / model hours with `npm run recent`.
+Daily refresh: `npm run data:update` (same as `npm run update`). It backfills the last seven national city files into the history database, then refreshes measured / CAMS / weather snapshots. `npm run recent` also archives any completed city-days that are not already in SQLite, and merges finished CAMS and weather days into `data/recent/` so the rolling window does not drop older rows. The current incomplete day stays on the “recent” sources only.
 
 ## Layout
 
@@ -40,12 +40,12 @@ scripts/    combined API + Vite dev process
 
 | Source | Role | Coverage in this repo |
 | --- | --- | --- |
-| CNEMC hourly city files via quotsoft / CN-AIR | Default PM / AQI history | National cities 2014-05-13 → yesterday; Beijing 2013-12-06 → yesterday |
+| CNEMC hourly city files via quotsoft / CN-AIR | Default PM / AQI history | National archive starts 2014-05-13; separate Beijing data starts 2013-12-06. Check /api/history-coverage for actual coverage. |
 | CNEMC live hours | Recent measured snapshot | About the last day |
 | Open-Meteo CAMS | Model comparison only | Recent hours |
 | Open-Meteo archive | Weather definition | Humidity exists for some recent days; visibility is still empty |
 
-A day uses the hourly mean when at least 12 local hours exist (`Asia/Shanghai`); otherwise the last published 24-hour mean. Archive holes that quotsoft itself does not host (for example 2014-07-15–23, 2015-01-01, 2018-12-22–26, 2019-08-24) stay missing. National cities before 13 May 2014 are not available for free except Beijing.
+A day uses the hourly mean when at least 12 local hours exist (`Asia/Shanghai`); otherwise the last published 24-hour mean. Archive holes that quotsoft itself does not host (for example 2014-07-15–23, 2015-01-01, 2018-12-22–26, 2019-08-24) stay missing. National cities before 13 May 2014 are not available for free except Beijing. Paid options for 2013 are listed in [docs/paid-sources.md](docs/paid-sources.md). City comparison is a table; a China map is blocked until a basemap with an official review number is available.
 
 Attribution and reuse notes: [docs/licenses.md](docs/licenses.md). Earlier CAMS / NOAA / OpenAQ probes: [docs/data-source-report.md](docs/data-source-report.md).
 

@@ -11,7 +11,7 @@ import {
 import { metrics, type ApiError } from "../shared/types.ts";
 import { geocode, staticCities } from "./geocode.ts";
 import { SeriesCache } from "./cache.ts";
-import { mockRegistry } from "./providers.ts";
+import { ProviderRegistry } from "./providers.ts";
 
 const messages: Record<ApiError["code"], ApiError["message"]> = {
   GEOCODE_NOT_FOUND: { zh: "未找到该城市。", en: "City not found." },
@@ -57,10 +57,10 @@ export function buildApp(options: {
   cachePath: string;
   ttlHours?: number;
   minCoverage?: number;
-  registry?: ReturnType<typeof mockRegistry>;
+  registry?: ProviderRegistry;
 }) {
   const app = Fastify();
-  const registry = options.registry ?? mockRegistry();
+  const registry = options.registry ?? new ProviderRegistry();
   const cache = new SeriesCache(options.cachePath, options.ttlHours);
   app.addHook("onClose", async () => cache.close());
   app.setErrorHandler<{ statusCode?: number }>((failure, request, reply) => {
@@ -72,7 +72,7 @@ export function buildApp(options: {
   app.setNotFoundHandler((_req, reply) =>
     reply.code(404).send(error("INVALID_PARAMS")),
   );
-  app.get("/api/health", () => ({ status: "ok", mode: "demo" }));
+  app.get("/api/health", () => ({ status: "ok" }));
   app.get("/api/geocode", (req, reply) => {
     const query = z
       .object({

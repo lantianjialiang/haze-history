@@ -43,6 +43,10 @@ export function Chart({
   const shown = kind === "trend" ? (["pm", "meteo"] as const) : [basis];
   const years = data.definitions.pm.stats.yearly.length;
   const height = chartHeight(kind, width, years);
+  const calendarStats = data.definitions[basis].stats.yearly.find(
+    (row) => row.period === String(year),
+  );
+  const calendarRule = data.definitions[basis].stats.rule;
   useLayoutEffect(() => {
     const element = host.current!;
     const measure = () =>
@@ -104,6 +108,35 @@ export function Chart({
           {yearPicker}
         </div>
       )}
+      {kind === "calendar" && (
+        <div className="calendar-summary">
+          <strong>
+            {t("calendarTotal", {
+              year,
+              countLabel:
+                !calendarStats || calendarStats.status === "nodata"
+                  ? t("nodata")
+                  : new Intl.NumberFormat(i18n.language).format(
+                      calendarStats.hazeDays,
+                    ) +
+                    " " +
+                    t("days"),
+            })}
+          </strong>
+          {calendarStats && (
+            <span>
+              {t(calendarStats.status)} · {t("coverage")}{" "}
+              {nf.format(calendarStats.coverage)}
+            </span>
+          )}
+          <span>
+            {t("rule")} · {ruleText(calendarRule, t, t(calendarRule.combine))}
+          </span>
+        </div>
+      )}
+      {shown.some((key) => data.series[key].providerId === "noaa-isd-xian") && (
+        <p className="chart-provenance">{t("airportVisibilityNote")}</p>
+      )}
       <div
         ref={host}
         className="chart"
@@ -148,11 +181,9 @@ export function Chart({
             <div key={key}>
               <strong>{data.sources[key].name[lang]}</strong> ·{" "}
               {t(
-                data.series[key].providerId.startsWith("mock")
-                  ? "synthetic"
-                  : data.series[key].sourceType === "measured"
-                    ? "observed"
-                    : "model",
+                data.series[key].sourceType === "measured"
+                  ? "observed"
+                  : "model",
               )}{" "}
               · {ruleText(stats.rule, t, t(stats.rule.combine))}
               {" · "}

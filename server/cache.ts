@@ -54,7 +54,7 @@ export class SeriesCache {
     if (
       cached &&
       cached.through_date >= end &&
-      (id === "quotsoft-cnemc" ? fresh : end < now || fresh)
+      (id === "quotsoft-cnemc" || id === "noaa-isd-xian" || id.endsWith("-recent") ? fresh : end < now || fresh)
     ) {
       return { data: JSON.parse(cached.payload) as SeriesResponse, hit: true };
     }
