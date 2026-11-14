@@ -57,7 +57,6 @@ jobs:
           path: |
             data/quotsoft-history.sqlite
             data/haze.sqlite
-            data/cn-air
           key: haze-data-${{ hashFiles('data/cities-overview.json', 'server/quotsoft.ts') }}-v1
           restore-keys: |
             haze-data-

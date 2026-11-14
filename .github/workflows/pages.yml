@@ -1,0 +1,80 @@
+# GitHub Pages must use **GitHub Actions** as the source (Settings → Pages),
+# not “Deploy from branch / root” — that publishes README.md instead of the app.
+
+name: Deploy Pages
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore local data cache
+        id: data-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/quotsoft-history.sqlite
+            data/haze.sqlite
+            data/embassy-history.sqlite
+          key: haze-data-${{ hashFiles('data/cities-overview.json', 'server/quotsoft.ts') }}-v1
+          restore-keys: |
+            haze-data-
+
+      - name: Install Git LFS
+        if: steps.data-cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y git-lfs
+          git lfs install
+
+      - name: Build history database
+        if: steps.data-cache.outputs.cache-hit != 'true'
+        run: |
+          npm run data:cn-air
+          HISTORY_SKIP_REMOTE=1 npm run history -- --national
+        env:
+          NODE_OPTIONS: --experimental-sqlite
+
+      - name: Static export and Vite build
+        run: npm run build:static
+        env:
+          NODE_OPTIONS: --experimental-sqlite
+
+      - name: Disable Jekyll on Pages
+        run: touch web/dist/.nojekyll
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/dist
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
