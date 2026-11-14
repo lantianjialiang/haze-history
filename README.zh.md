@@ -30,13 +30,14 @@ npm run preview:static   # 本地静态服务预览（不要用 file:// 直接�
 
 构建会把城市和年度序列写入 `web/public/data/`，前端通过相对路径读取。更新数据后需重新执行 `build:static`。页面会提示当前为静态模式。
 
-历史图表依赖 `data/quotsoft-history.sqlite`。若本地没有该文件：
+历史图表依赖 `data/quotsoft-history.sqlite`。仓库里通常已附带该库；若要**从原始 CSV 重建**或在本机重新入库：
 
 ```bash
+npm run data:cn-air          # 稀疏克隆 CN-AIR 到 data/cn-air（需 Git + Git LFS，约 1–2 GB）
 npm run history -- --national
 ```
 
-有 `data/cn-air` 时会先吃本地 CSV，再从 quotsoft 补缺日。可选环境变量：`HISTORY_SKIP_REMOTE=1`、`HISTORY_CONCURRENCY=4`、`HISTORY_DELAY_MS=200`。
+说明见 [docs/cn-air-clone.md](docs/cn-air-clone.md)。`data/cn-air` **不提交到 Git**；有本地镜像时 `history` 会先读 CSV，再从 quotsoft 补缺日。可选环境变量：`HISTORY_SKIP_REMOTE=1`、`HISTORY_CONCURRENCY=4`、`HISTORY_DELAY_MS=200`。
 
 ## 全国历史与后续更新
 

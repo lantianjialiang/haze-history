@@ -16,5 +16,5 @@ Generated locally (gitignored):
 - `*.sqlite-wal` / `*.sqlite-shm` — SQLite WAL sidecars.
 - `haze.sqlite` — HTTP series cache. Created on first `npm run dev`.
 - `data/embassy/` — raw embassy CSV cache from `npm run data:embassy`.
-- `cn-air/` — optional sparse clone of [GewisLab/CN-AIR](https://atomgit.com/GewisLab/CN-AIR) so history ingest can skip most remote downloads.
+- `cn-air/` — **not in git.** Sparse clone of [GewisLab/CN-AIR](https://atomgit.com/GewisLab/CN-AIR); create with `npm run data:cn-air` (see [docs/cn-air-clone.md](../docs/cn-air-clone.md)).
 - `archive/` — timestamped copies of each `npm run recent` payload.

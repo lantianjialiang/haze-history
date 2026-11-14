@@ -7,6 +7,7 @@ import {
   registerRecent,
   registerXianVisibility,
 } from "./recent.ts";
+import { registerAqicnXian } from "./aqicn-xian.ts";
 import { registerEmbassy } from "./embassy.ts";
 import { HistoryStore, historyPath, registerHistory } from "./quotsoft.ts";
 
@@ -16,6 +17,7 @@ export function createRegistry(root: string) {
   registerXianVisibility(registry, root);
   registerHistory(registry, root);
   registerEmbassy(registry, root);
+  registerAqicnXian(registry, root);
   return registry;
 }
 

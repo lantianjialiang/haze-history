@@ -2,7 +2,7 @@
 
 ## 空气质量与官方统计
 
-从本地 `data/quotsoft-history.sqlite` 的 `daily` 表按西安和自然年聚合。官方年度数据保存在 `data/reference/xian-official-annual.csv`，2024 原始统计公报 PDF 同目录存档。这些年度统计仅用于对比，不能恢复日期，不输入日历热力图。
+从本地 `data/quotsoft-history.sqlite` 的 `daily` 表按西安和自然年聚合。另可选数据源 **AQICN 西安历史日值**（`aqicn-xian`）：将 [aqicn.org 历史页](https://aqicn.org/historical/#!city:xian) 导出的 CSV 放入 `data/reference/xian-aqicn-daily.csv` 后运行 `npm run data:aqicn-xian` 生成 `xian-aqicn-daily.json`。官方年度数据保存在 `data/reference/xian-official-annual.csv`，2024 原始统计公报 PDF 同目录存档。这些年度统计仅用于对比，不能恢复日期，不输入日历热力图。
 
 | 年 | 本地有效日 | 本地日均 PM2.5 的平均值 | 官方 PM2.5 年均 | 本地 AQI ≤ 100 天数 | 官方优良天数 |
 |---|---:|---:|---:|---:|---:|

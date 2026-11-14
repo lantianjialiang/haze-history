@@ -15,13 +15,14 @@ The UI sits PM2.5 / AQI rules next to a visibility / humidity definition. Thresh
 
 On Windows, `start-local.cmd` installs missing dependencies and starts both services. If PowerShell blocks `npm.ps1`, use `npm.cmd`. Copy `.env.example` to `.env` only when you need to change ports, cache TTL, or coverage.
 
-Historical charts need `data/quotsoft-history.sqlite`. If that file is missing, run:
+Historical charts use `data/quotsoft-history.sqlite` (usually committed). To **rebuild from raw CSV** on a new machine:
 
 ```bash
+npm run data:cn-air          # sparse CN-AIR clone into data/cn-air (Git + Git LFS, ~1–2 GB)
 npm run history -- --national
 ```
 
-That command ingests a local `data/cn-air` clone when present, then downloads remaining days from quotsoft. Optional env vars: `HISTORY_SKIP_REMOTE=1`, `HISTORY_CONCURRENCY=4`, `HISTORY_DELAY_MS=200`.
+See [docs/cn-air-clone.md](docs/cn-air-clone.md). `data/cn-air` is **not in git**. When present, `history` reads local CSVs first, then fills gaps from quotsoft. Optional env vars: `HISTORY_SKIP_REMOTE=1`, `HISTORY_CONCURRENCY=4`, `HISTORY_DELAY_MS=200`.
 
 Daily refresh: `npm run data:update` (same as `npm run update`). It backfills the last seven national city files into the history database, then refreshes measured / CAMS / weather snapshots. `npm run recent` also archives any completed city-days that are not already in SQLite, and merges finished CAMS and weather days into `data/recent/` so the rolling window does not drop older rows. The current incomplete day stays on the “recent” sources only.
 
