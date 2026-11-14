@@ -62,6 +62,19 @@ it("returns all requested days and avoids repeat provider calls", async () => {
   expect((await app.inject(url)).json().meta.cacheHit).toBe(false);
   expect(calls).toHaveBeenCalledTimes(2);
 });
+it("returns empty hourly rows when a provider has no hour series", async () => {
+  app = buildApp({ cachePath: ":memory:", registry: mockRegistry() });
+  const payload = (
+    await app.inject(
+      "/api/hours?cityId=CN-110100&providerId=mock-pm-grid&date=2013-01-02",
+    )
+  ).json();
+  expect(payload).toMatchObject({
+    providerId: "mock-pm-grid",
+    date: "2013-01-02",
+    hours: [],
+  });
+});
 it("reports structured parameter and provider errors and a missing-data period", async () => {
   app = buildApp({ cachePath: ":memory:", registry: mockRegistry() });
   expect((await app.inject("/api/health")).statusCode).toBe(200);

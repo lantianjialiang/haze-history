@@ -1,8 +1,14 @@
 import { mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { DatabaseSync } from "node:sqlite";
+import overview from "../data/cities-overview.json" with { type: "json" };
 import { dateRange } from "../shared/dates.ts";
-import type { CityRef, Metric, SeriesResponse } from "../shared/types.ts";
+import type {
+  CityRef,
+  HourlyRecord,
+  Metric,
+  SeriesResponse,
+} from "../shared/types.ts";
 import {
   emptyDay,
   missingRate,
@@ -27,6 +33,12 @@ export interface DailyValue {
   aqi: number | null;
   validHours: number;
   method: "hourly-mean" | "published-24h" | "nodata";
+}
+export interface HourSlot {
+  hour: number;
+  pm25: number | null;
+  pm10: number | null;
+  aqi: number | null;
 }
 
 function numeric(value: string | undefined) {
@@ -204,6 +216,118 @@ export function parseBeijingCsv(
   return [summarize(date, cityId, bucket)];
 }
 
+function hourSlots(byHour: Map<number, HourSlot>) {
+  return Array.from({ length: 24 }, (_, hour) => {
+    const hit = byHour.get(hour);
+    return {
+      hour,
+      pm25: hit?.pm25 ?? null,
+      pm10: hit?.pm10 ?? null,
+      aqi: hit?.aqi ?? null,
+    };
+  });
+}
+
+function applyHourType(
+  slot: HourSlot,
+  type: string,
+  value: number | null,
+) {
+  if (type === "PM2.5") slot.pm25 = value;
+  else if (type === "PM10") slot.pm10 = value;
+  else if (type === "AQI") slot.aqi = value;
+}
+
+export function parseCityHourlyCsv(text: string, cities: CityColumn[]) {
+  const lines = text.split(/\r?\n/).filter((line) => line.trim());
+  if (lines.length < 2) return new Map<string, HourSlot[]>();
+  const header = lines[0].split(",");
+  const indexes = cityIndex(header, cities);
+  const byCity = new Map<string, Map<number, HourSlot>>();
+  for (const [id] of indexes) byCity.set(id, new Map());
+  for (const line of lines.slice(1)) {
+    const cells = line.split(",");
+    const type = cells[2];
+    if (type !== "PM2.5" && type !== "PM10" && type !== "AQI") continue;
+    const hour = Number(cells[1]);
+    if (!Number.isInteger(hour) || hour < 0 || hour > 23) continue;
+    for (const [id, index] of indexes) {
+      const hours = byCity.get(id)!;
+      const slot = hours.get(hour) ?? {
+        hour,
+        pm25: null,
+        pm10: null,
+        aqi: null,
+      };
+      applyHourType(slot, type, numeric(cells[index]));
+      hours.set(hour, slot);
+    }
+  }
+  return new Map(
+    [...byCity].map(([id, hours]) => [id, hourSlots(hours)] as const),
+  );
+}
+
+export function parseBeijingHourlyCsv(
+  text: string,
+  cityId = "CN-110100",
+): HourSlot[] {
+  const lines = text.split(/\r?\n/).filter((line) => line.trim());
+  if (lines.length < 2) return hourSlots(new Map());
+  const header = lines[0].split(",");
+  const stations = header
+    .map((name, index) => ({ name, index }))
+    .filter(
+      (column) =>
+        column.index >= 3 &&
+        !column.name.includes("对照") &&
+        column.name.trim(),
+    );
+  const byHour = new Map<number, HourSlot>();
+  for (const line of lines.slice(1)) {
+    const cells = line.split(",");
+    const type = cells[2];
+    if (type !== "PM2.5" && type !== "PM10" && type !== "AQI") continue;
+    const hour = Number(cells[1]);
+    if (!Number.isInteger(hour) || hour < 0 || hour > 23) continue;
+    const values = stations
+      .map((station) => numeric(cells[station.index]))
+      .filter((value): value is number => value != null);
+    const value = values.length ? round(mean(values)) : null;
+    const slot = byHour.get(hour) ?? {
+      hour,
+      pm25: null,
+      pm10: null,
+      aqi: null,
+    };
+    applyHourType(slot, type, value);
+    byHour.set(hour, slot);
+  }
+  return hourSlots(byHour);
+}
+
+function toHourlyRecords(hours: HourSlot[]): HourlyRecord[] {
+  return hours.map((slot) => ({
+    ...slot,
+    visibility_km: null,
+    rh: null,
+  }));
+}
+
+const cityColumns = (overview as { id: string; name: { zh: string } }[]).map(
+  (city) => ({ id: city.id, name: city.name.zh }),
+) satisfies CityColumn[];
+
+async function fetchQuotsoftCsv(file: string) {
+  const response = await fetch("https://quotsoft.net/air/data/" + file, {
+    headers: { "User-Agent": "haze-history-local/0.2" },
+    signal: AbortSignal.timeout(30000),
+  });
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error("HTTP " + response.status);
+  return await response.text();
+}
+
 export class HistoryStore {
   db: DatabaseSync;
   private chain = Promise.resolve();
@@ -230,6 +354,15 @@ export class HistoryStore {
         valid_hours INTEGER,
         method TEXT,
         PRIMARY KEY (city_id, date)
+      );
+      CREATE TABLE IF NOT EXISTS hourly (
+        city_id TEXT NOT NULL,
+        date TEXT NOT NULL,
+        hour INTEGER NOT NULL,
+        pm25 REAL,
+        pm10 REAL,
+        aqi REAL,
+        PRIMARY KEY (city_id, date, hour)
       );
     `);
   }
@@ -322,6 +455,39 @@ export class HistoryStore {
       last: range.last,
     };
   }
+  cityHours(cityId: string, date: string) {
+    return this.db
+      .prepare(
+        "SELECT hour, pm25, pm10, aqi FROM hourly WHERE city_id=? AND date=? ORDER BY hour",
+      )
+      .all(cityId, date) as unknown as HourSlot[];
+  }
+  saveHours(cityId: string, date: string, hours: HourSlot[]) {
+    return this.exclusive(() => {
+      const write = this.db.prepare(
+        `INSERT INTO hourly VALUES (?, ?, ?, ?, ?, ?)
+         ON CONFLICT(city_id, date, hour) DO UPDATE SET
+           pm25=excluded.pm25, pm10=excluded.pm10, aqi=excluded.aqi`,
+      );
+      this.db.exec("BEGIN");
+      try {
+        for (const slot of hours) {
+          write.run(
+            cityId,
+            date,
+            slot.hour,
+            slot.pm25,
+            slot.pm10,
+            slot.aqi,
+          );
+        }
+        this.db.exec("COMMIT");
+      } catch (error) {
+        this.db.exec("ROLLBACK");
+        throw error;
+      }
+    });
+  }
   cityDays(cityId: string, from: string, to: string) {
     return this.db
       .prepare(
@@ -393,6 +559,31 @@ export class QuotsoftProvider implements DataProvider {
         missingRateByYear: missingRate(records, metricsReturned),
       },
     };
+  }
+  async getHourly(city: CityRef, date: string): Promise<HourlyRecord[]> {
+    const cached = this.store.cityHours(city.id, date);
+    if (
+      cached.length === 24 &&
+      cached.some(
+        (slot) => slot.pm25 != null || slot.pm10 != null || slot.aqi != null,
+      )
+    )
+      return toHourlyRecords(cached);
+    const stamp = date.replaceAll("-", "");
+    const beijingOnly = city.id === "CN-110100" && date < CITIES_START;
+    const file = beijingOnly
+      ? `beijing_all_${stamp}.csv`
+      : `china_cities_${stamp}.csv`;
+    const text = await fetchQuotsoftCsv(file);
+    if (!text) return toHourlyRecords(hourSlots(new Map()));
+    if (beijingOnly) {
+      const hours = parseBeijingHourlyCsv(text, city.id);
+      await this.store.saveHours(city.id, date, hours);
+      return toHourlyRecords(hours);
+    }
+    const parsed = parseCityHourlyCsv(text, cityColumns);
+    for (const [id, hours] of parsed) await this.store.saveHours(id, date, hours);
+    return toHourlyRecords(parsed.get(city.id) ?? hourSlots(new Map()));
   }
 }
 

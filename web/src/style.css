@@ -574,6 +574,19 @@ input[type="number"] {
   font-size: 12px;
   margin: 5px 0 9px;
 }
+.hourly-panel {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.hourly-panel h3 {
+  font-size: 15px;
+  margin: 0 0 8px;
+}
+.hourly-panel p {
+  color: var(--muted);
+  font-size: 13px;
+}
 .calendar-summary {
   display: flex;
   flex-wrap: wrap;

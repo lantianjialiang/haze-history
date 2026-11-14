@@ -21,6 +21,20 @@ export interface DailyRecord {
   rh: number | null;
   validHours?: number;
 }
+export interface HourlyRecord {
+  hour: number;
+  pm25: number | null;
+  pm10: number | null;
+  aqi: number | null;
+  visibility_km: number | null;
+  rh: number | null;
+}
+export interface HourlyResponse {
+  city: CityRef;
+  providerId: string;
+  date: string;
+  hours: HourlyRecord[];
+}
 export interface CityRef {
   id: string;
   name: Localized;

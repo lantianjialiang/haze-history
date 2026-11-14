@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { parseBeijingCsv, parseCityCsv } from "./quotsoft.ts";
+import {
+  parseBeijingCsv,
+  parseBeijingHourlyCsv,
+  parseCityCsv,
+  parseCityHourlyCsv,
+} from "./quotsoft.ts";
 
 const cities = [
   { id: "CN-110100", name: "北京" },
@@ -38,6 +43,25 @@ describe("quotsoft city csv", () => {
       method: "published-24h",
       validHours: 1,
     });
+  });
+});
+
+describe("city hourly csv", () => {
+  it("keeps the hour of day instead of collapsing to a daily mean", () => {
+    const text =
+      "date,hour,type,北京,上海\n20240101,8,PM2.5,80,20\n20240101,8,AQI,110,30\n20240101,9,PM2.5,90,25";
+    const parsed = parseCityHourlyCsv(text, cities);
+    expect(parsed.get("CN-110100")?.[8]).toMatchObject({
+      hour: 8,
+      pm25: 80,
+      aqi: 110,
+    });
+    expect(parsed.get("CN-110100")?.[9]).toMatchObject({ hour: 9, pm25: 90 });
+    expect(
+      parseBeijingHourlyCsv(
+        "date,hour,type,东四,天坛,定陵(对照点)\n20131206,8,PM2.5,80,100,10",
+      )[8],
+    ).toMatchObject({ hour: 8, pm25: 90 });
   });
 });
 

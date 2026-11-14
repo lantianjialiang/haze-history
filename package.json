@@ -21,7 +21,8 @@
     "history": "tsx --experimental-sqlite server/scripts/download-quotsoft.ts",
     "recent": "tsx --experimental-sqlite server/scripts/fetch-recent.ts",
     "update": "node scripts/update-data.mjs",
-    "data:update": "node scripts/update-data.mjs"
+    "data:update": "node scripts/update-data.mjs",
+    "data:embassy": "tsx --experimental-sqlite server/scripts/download-embassy.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",

@@ -1,6 +1,7 @@
 import type {
   CityRef,
   DailyRecord,
+  HourlyRecord,
   Metric,
   ProviderMeta,
   SeriesResponse,
@@ -14,6 +15,7 @@ export interface DataProvider {
     to: string,
     metrics: Metric[],
   ): Promise<SeriesResponse>;
+  getHourly?(city: CityRef, date: string): Promise<HourlyRecord[]>;
 }
 export class ProviderRegistry {
   private providers = new Map<string, DataProvider>();

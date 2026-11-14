@@ -1,16 +1,18 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { SeriesResponse } from "../../shared/types.ts";
+import type { HourlyRecord, HourlyResponse, SeriesResponse } from "../../shared/types.ts";
 import { ruleText } from "../../shared/rules.ts";
 import {
   chartHeight,
   chartOption,
   echarts,
+  hourlyOption,
   type Basis,
   type ChartData,
   type ChartKind,
   type Theme,
 } from "./charts.ts";
+import { api } from "./api.ts";
 import { Icon } from "./icons.tsx";
 export interface DisplayData {
   definitions: Record<Basis, ChartData>;
@@ -26,6 +28,8 @@ export function Chart({
   onExport,
   onBasis,
   yearPicker,
+  cityId,
+  providerId,
 }: {
   kind: ChartKind;
   data: DisplayData;
@@ -35,6 +39,8 @@ export function Chart({
   onExport: () => void;
   onBasis?: (basis: Basis) => void;
   yearPicker?: React.ReactNode;
+  cityId?: string;
+  providerId?: string;
 }) {
   const { t, i18n } = useTranslation();
   const host = useRef<HTMLDivElement>(null);
@@ -47,6 +53,32 @@ export function Chart({
     (row) => row.period === String(year),
   );
   const calendarRule = data.definitions[basis].stats.rule;
+  const [day, setDay] = useState<string>();
+  const [hours, setHours] = useState<HourlyRecord[] | null>(null);
+  const hourly = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (kind !== "calendar") return;
+    const days = data.definitions[basis].days.filter((row) =>
+      row.date.startsWith(String(year)),
+    );
+    const latest =
+      [...days].reverse().find((row) => row.status !== "nodata") ?? days.at(-1);
+    setDay(latest?.date);
+  }, [kind, data, basis, year]);
+  useEffect(() => {
+    if (kind !== "calendar" || !day || !cityId || !providerId) return;
+    const controller = new AbortController();
+    setHours(null);
+    const query = new URLSearchParams({ cityId, providerId, date: day });
+    api<HourlyResponse>("/hours?" + query, controller.signal)
+      .then((payload) => {
+        if (!controller.signal.aborted) setHours(payload.hours);
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) setHours([]);
+      });
+    return () => controller.abort();
+  }, [kind, day, cityId, providerId]);
   useLayoutEffect(() => {
     const element = host.current!;
     const measure = () =>
@@ -74,8 +106,25 @@ export function Chart({
         width,
       ),
     );
+    if (kind === "calendar") {
+      chart.on("click", (params) => {
+        const date = (params.data as { value?: [string, number] } | undefined)
+          ?.value?.[0];
+        if (typeof date === "string") setDay(date);
+      });
+    }
     return () => chart.dispose();
   }, [kind, data, basis, year, theme, t, i18n.language, width, height]);
+  useLayoutEffect(() => {
+    if (kind !== "calendar" || !hourly.current || !hours?.length) return;
+    const chart = echarts.init(hourly.current, undefined, {
+      renderer: "canvas",
+      width,
+      height: 220,
+    });
+    chart.setOption(hourlyOption(hours, day ?? "", theme, t, i18n.language));
+    return () => chart.dispose();
+  }, [kind, hours, day, theme, t, i18n.language, width]);
   const nf = new Intl.NumberFormat(i18n.language, {
     style: "percent",
     maximumFractionDigits: 1,
@@ -85,7 +134,10 @@ export function Chart({
       <div className="chart-header">
         <div>
           <h2>{t(kind)}</h2>
-          <p>{t(kind + "Info")}</p>
+          <p>
+            {t(kind + "Info")}
+            {kind === "calendar" ? " " + t("hourlyHint") : ""}
+          </p>
         </div>
         <button className="button compact" onClick={onExport}>
           <Icon name="download" />
@@ -144,6 +196,33 @@ export function Chart({
         aria-label={t(kind)}
         style={{ height }}
       />
+      {kind === "calendar" && day && (
+        <div className="hourly-panel">
+          <h3>
+            {t("hourly")} · {day}
+          </h3>
+          {hours == null ? (
+            <p>{t("loading")}</p>
+          ) : hours.some(
+              (hour) =>
+                hour.pm25 != null ||
+                hour.pm10 != null ||
+                hour.aqi != null ||
+                hour.visibility_km != null ||
+                hour.rh != null,
+            ) ? (
+            <div
+              ref={hourly}
+              className="chart hourly-chart"
+              role="img"
+              aria-label={t("hourly")}
+              style={{ height: 220 }}
+            />
+          ) : (
+            <p>{t("hourlyEmpty")}</p>
+          )}
+        </div>
+      )}
       <div className="legend-strip">
         {kind === "calendar" && (
           <>

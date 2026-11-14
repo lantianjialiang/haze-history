@@ -8,7 +8,7 @@ import {
   ruleSchema,
   yearOverYear,
 } from "../shared/rules.ts";
-import { metrics, type ApiError } from "../shared/types.ts";
+import { metrics, type ApiError, type HourlyResponse } from "../shared/types.ts";
 import { geocode, staticCities } from "./geocode.ts";
 import { SeriesCache } from "./cache.ts";
 import { ProviderRegistry } from "./providers.ts";
@@ -146,6 +146,38 @@ export function buildApp(options: {
       };
     } catch {
       return reply.code(503).send(unavailable(required));
+    }
+  });
+  app.get("/api/hours", async (req, reply) => {
+    const query = z
+      .object({
+        cityId: z.string().min(1),
+        providerId: z.string().min(1),
+        date: z.string(),
+      })
+      .safeParse(req.query);
+    if (!query.success || !validDate(query.data.date))
+      return reply.code(400).send(error("INVALID_PARAMS"));
+    const city = staticCities.get(query.data.cityId);
+    if (!city) return reply.code(404).send(error("GEOCODE_NOT_FOUND"));
+    const provider = registry.get(query.data.providerId);
+    if (!provider) return reply.code(503).send(unavailable(metrics.slice()));
+    if (!provider.getHourly)
+      return {
+        city,
+        providerId: provider.meta.id,
+        date: query.data.date,
+        hours: [],
+      } satisfies HourlyResponse;
+    try {
+      return {
+        city,
+        providerId: provider.meta.id,
+        date: query.data.date,
+        hours: await provider.getHourly(city, query.data.date),
+      } satisfies HourlyResponse;
+    } catch {
+      return reply.code(503).send(unavailable(provider.meta.metrics));
     }
   });
   app.post("/api/cache/invalidate", () => ({ removed: cache.invalidate() }));

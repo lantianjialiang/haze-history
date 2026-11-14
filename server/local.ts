@@ -7,6 +7,7 @@ import {
   registerRecent,
   registerXianVisibility,
 } from "./recent.ts";
+import { registerEmbassy } from "./embassy.ts";
 import { HistoryStore, historyPath, registerHistory } from "./quotsoft.ts";
 
 export function createLocalApp() {
@@ -16,6 +17,7 @@ export function createLocalApp() {
   registerRecent(registry, root);
   registerXianVisibility(registry, root);
   registerHistory(registry, root);
+  registerEmbassy(registry, root);
   const app = buildApp({
     cachePath: path === ":memory:" ? path : resolve(root, path),
     ttlHours: Number(process.env.CACHE_TTL_HOURS ?? 12),

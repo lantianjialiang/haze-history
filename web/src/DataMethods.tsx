@@ -39,6 +39,7 @@ export function DataMethods() {
           [
             "sourceArchive",
             "sourceRecent",
+            "sourceEmbassy",
             "sourceCams",
             "sourceWeather",
           ] as const

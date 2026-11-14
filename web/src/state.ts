@@ -11,7 +11,7 @@ export const years = Array.from(
   (_, i) => 2013 + i,
 );
 export const sourceIds = {
-  pm: ["quotsoft-cnemc", "cnemc-recent", "cams-recent"],
+  pm: ["quotsoft-cnemc", "cnemc-recent", "cams-recent", "stateair-embassy"],
   meteo: ["open-meteo-recent", "noaa-isd-xian"],
 } as const;
 export interface Settings {

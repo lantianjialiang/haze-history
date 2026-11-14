@@ -7,7 +7,6 @@ import { classifyDays, ruleText, serializeRule } from "../../shared/rules.ts";
 import { presets } from "../../shared/presets.ts";
 import { copyright } from "../../shared/copyright.ts";
 import licenseUrl from "../../LICENSE?url";
-import { compareBases } from "../../shared/overlap.ts";
 import { DataMethods, comparisonColumns } from "./DataMethods.tsx";
 import type {
   ApiError,
@@ -61,6 +60,14 @@ const ipSources = [
     url: "https://www.ncei.noaa.gov/products/land-based-station/integrated-surface-database",
   },
   { name: "OpenAQ", url: "https://docs.openaq.org/about/about" },
+  {
+    name: "U.S. Department of State AirNow embassy PM2.5",
+    url: "https://github.com/dolekhanhdang/Air-Quality-Data-from-U.S.-Embassies",
+  },
+  {
+    name: "UCI five-city PM2.5 (2010–2015)",
+    url: "https://archive.ics.uci.edu/dataset/394/pm2+5+data+of+five+chinese+cities",
+  },
   { name: "Meteostat", url: "https://dev.meteostat.net/data" },
 ];
 
@@ -308,7 +315,12 @@ export function App() {
           api<StatsResponse>("/stats", controller.signal, { ...params, rule }),
           api<SeriesResponse>("/series?" + q, controller.signal),
         ]);
-        return { stats, series, days: classifyDays(series.records, rule) };
+        return {
+          stats,
+          series,
+          days: classifyDays(series.records, rule),
+          records: series.records,
+        };
       }),
     )
       .then(([pm, meteo]) => {
@@ -374,13 +386,6 @@ export function App() {
         Math.min(last.settings.to, settings.calendar),
       )
     : settings.calendar;
-  const overlap =
-    last &&
-    compareBases(
-      last.data.definitions.pm.days,
-      last.data.definitions.meteo.days,
-      chartYear,
-    );
   const yearPicker = (
     <label className="inline-field">
       {t("year")}{" "}
@@ -853,17 +858,9 @@ export function App() {
                       onExport={() => exportChart("calendar")}
                       onBasis={setBasis}
                       yearPicker={yearPicker}
+                      cityId={last.settings.cityId}
+                      providerId={last.settings[basis]}
                     />
-                    {overlap && (
-                      <section className="surface chart-card">
-                        <h2>{t("overlapTitle", { year: chartYear })}</h2>
-                        <p>
-                          {overlap.valid
-                            ? t("overlapCounts", overlap)
-                            : t("overlapEmpty")}
-                        </p>
-                      </section>
-                    )}
                   </div>
                 )}
               </section>

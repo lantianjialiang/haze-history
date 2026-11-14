@@ -41,6 +41,7 @@ scripts/    combined API + Vite dev process
 | Source | Role | Coverage in this repo |
 | --- | --- | --- |
 | CNEMC hourly city files via quotsoft / CN-AIR | Default PM / AQI history | National archive starts 2014-05-13; separate Beijing data starts 2013-12-06. Check /api/history-coverage for actual coverage. |
+| US Embassy PM2.5 | Optional measured comparison | Beijing, Shanghai, Guangzhou, Chengdu, Shenyang from 2013 (`npm run data:embassy`). UCI to 2015; AirNow/EPA snapshot 2016–2025 (Chengdu ends 2020). |
 | CNEMC live hours | Recent measured snapshot | About the last day |
 | Open-Meteo CAMS | Model comparison only | Recent hours |
 | Open-Meteo archive | Weather definition | Humidity exists for some recent days; visibility is still empty |

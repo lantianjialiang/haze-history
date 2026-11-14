@@ -1,5 +1,5 @@
 import * as echarts from "echarts/core";
-import { BarChart, HeatmapChart, ScatterChart } from "echarts/charts";
+import { BarChart, HeatmapChart, LineChart, ScatterChart } from "echarts/charts";
 import {
   CalendarComponent,
   GridComponent,
@@ -10,13 +10,16 @@ import {
 import { CanvasRenderer } from "echarts/renderers";
 import type { TFunction } from "i18next";
 import type {
+  DailyRecord,
   DayResult,
+  HourlyRecord,
   PeriodStat,
   StatsResponse,
 } from "../../shared/types.ts";
 echarts.use([
   BarChart,
   HeatmapChart,
+  LineChart,
   ScatterChart,
   CalendarComponent,
   GridComponent,
@@ -33,6 +36,7 @@ export type Basis = "pm" | "meteo";
 export interface ChartData {
   stats: StatsResponse;
   days: DayResult[];
+  records: DailyRecord[];
 }
 export const colors = (theme: Theme) =>
   theme === "dark"
@@ -308,7 +312,26 @@ export function chartOption(
         } = params as {
           data: { value: [string, number | null]; status: string };
         };
-        return value[0] + " · " + t(status);
+        const record = data[basis].records.find((row) => row.date === value[0]);
+        const nf = new Intl.NumberFormat(lang, { maximumFractionDigits: 1 });
+        const line = (metric: "pm25" | "pm10" | "aqi" | "visibility_km" | "rh") => {
+          const sample = record?.[metric];
+          if (sample == null) return null;
+          return t(metric) + " " + nf.format(sample);
+        };
+        return [
+          value[0] + " · " + t(status),
+          line("pm25"),
+          line("pm10"),
+          line("aqi"),
+          line("visibility_km"),
+          line("rh"),
+          record?.validHours != null
+            ? t("validHours", { count: record.validHours })
+            : null,
+        ]
+          .filter(Boolean)
+          .join("\n");
       },
     },
     series: [
@@ -336,6 +359,82 @@ export function chartOption(
     ],
   };
 }
+export function hourlyOption(
+  hours: HourlyRecord[],
+  date: string,
+  theme: Theme,
+  t: TFunction,
+  lang: string,
+): echarts.EChartsCoreOption {
+  const c = colors(theme);
+  const nf = new Intl.NumberFormat(lang, { maximumFractionDigits: 1 });
+  const series = (
+    [
+      ["pm25", c.pm],
+      ["pm10", c.pm],
+      ["aqi", c.meteo],
+      ["visibility_km", c.meteo],
+      ["rh", c.missing],
+    ] as const
+  ).filter(([metric]) => hours.some((hour) => hour[metric] != null));
+  return {
+    animation: false,
+    textStyle: {
+      color: c.text,
+      fontFamily: "system-ui, Microsoft YaHei, sans-serif",
+    },
+    grid: { left: 42, right: 18, top: 36, bottom: 28 },
+    legend: {
+      data: series.map(([metric]) => t(metric)),
+      textStyle: { color: c.muted },
+      right: 5,
+      top: 0,
+    },
+    xAxis: {
+      type: "category",
+      data: hours.map((hour) => String(hour.hour).padStart(2, "0")),
+      axisTick: { show: false },
+      axisLine: { lineStyle: { color: c.grid } },
+      axisLabel: { color: c.muted },
+    },
+    yAxis: {
+      type: "value",
+      axisLabel: { color: c.muted },
+      splitLine: { lineStyle: { color: c.grid, type: "dashed" } },
+    },
+    tooltip: {
+      trigger: "axis",
+      confine: true,
+      renderMode: "richText",
+      backgroundColor: c.panel,
+      textStyle: { color: c.text },
+      formatter: (items: unknown) => {
+        const rows = items as { axisValue: string; seriesName: string; data: number | null }[];
+        if (!rows.length) return "";
+        return [
+          date + " " + rows[0].axisValue + ":00",
+          ...rows.map(
+            (row) =>
+              row.seriesName +
+              " · " +
+              (row.data == null ? t("nodata") : nf.format(row.data)),
+          ),
+        ].join("\n");
+      },
+    },
+    series: series.map(([metric, color]) => ({
+      type: "line",
+      name: t(metric),
+      showSymbol: hours.length <= 24,
+      symbolSize: 6,
+      itemStyle: { color },
+      lineStyle: { width: 2, color },
+      connectNulls: false,
+      data: hours.map((hour) => hour[metric]),
+    })),
+  };
+}
+
 export function chartHeight(kind: ChartKind, width: number, years: number) {
   return kind === "trend"
     ? width < 600
