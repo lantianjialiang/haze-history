@@ -16,6 +16,7 @@ import type {
   StatsResponse,
 } from "../../shared/types.ts";
 import { api, isStaticSite } from "./api.ts";
+import { parseAppPath, toAppPath } from "./paths.ts";
 import { Chart, type DisplayData } from "./Chart.tsx";
 import type { Basis, ChartKind, Theme } from "./charts.ts";
 import { ExportDialog } from "./ExportDialog.tsx";
@@ -228,7 +229,7 @@ export function App() {
   const { t, i18n } = useTranslation();
   const [route, setRoute] = useState(() => ({
     ...readSettings(),
-    pathname: location.pathname,
+    pathname: parseAppPath(location.pathname),
   }));
   const settings = route.settings;
   const lang = settings.lang === "en" ? "en" : "zh";
@@ -265,7 +266,7 @@ export function App() {
   useEffect(() => {
     syncSettings(route.settings, route.pathname, true);
     const onPop = () =>
-      setRoute({ ...readSettings(), pathname: location.pathname });
+      setRoute({ ...readSettings(), pathname: parseAppPath(location.pathname) });
     addEventListener("popstate", onPop);
     return () => removeEventListener("popstate", onPop);
     // The initial URL is normalized once. Subsequent navigation is explicit.
@@ -431,7 +432,7 @@ export function App() {
               {t("home")}
             </a>
             <a
-              href="/about"
+              href={toAppPath("/about")}
               aria-current={isNotes ? "page" : undefined}
               onClick={(e) => {
                 e.preventDefault();
@@ -695,7 +696,7 @@ export function App() {
                 </div>
                 <a
                   className="methods-link"
-                  href="/about"
+                  href={toAppPath("/about")}
                   onClick={(e) => {
                     e.preventDefault();
                     update({}, "/about");

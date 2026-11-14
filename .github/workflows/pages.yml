@@ -67,9 +67,12 @@ jobs:
         run: npm run build:static
         env:
           NODE_OPTIONS: --experimental-sqlite
+          VITE_BASE: /haze-history/
 
       - name: Disable Jekyll on Pages
-        run: touch web/dist/.nojekyll
+        run: |
+          touch web/dist/.nojekyll
+          cp web/dist/index.html web/dist/404.html
 
       - uses: actions/configure-pages@v5
 

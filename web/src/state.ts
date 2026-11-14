@@ -4,6 +4,7 @@ import { presets } from "../../shared/presets.ts";
 import { parseRule, serializeRule } from "../../shared/rules.ts";
 import type { RuleConfig } from "../../shared/types.ts";
 import { remember, stored, validLanguage, type Language } from "./i18n.ts";
+import { parseAppPath, toAppPath } from "./paths.ts";
 
 export const currentYear = Number(today().slice(0, 4));
 export const years = Array.from(
@@ -67,8 +68,8 @@ export function readSettings() {
           : undefined;
       },
     );
-  const candidate =
-    location.pathname.match(/^\/city\/([^/]+)\/?$/)?.[1] ?? "CN-610100";
+  const path = parseAppPath(location.pathname);
+  const candidate = path.match(/^\/city\/([^/]+)\/?$/)?.[1] ?? "CN-610100";
   const cityId = cityList.some((city) => city.id === candidate)
     ? candidate
     : ((invalid = true), "CN-610100");
@@ -130,7 +131,7 @@ export function syncSettings(
     q.set(key, presets.includes(rule) ? rule.id : serializeRule(rule));
     remember("haze." + key, serializeRule(rule));
   }
-  const url = pathname + "?" + q;
+  const url = toAppPath(pathname) + "?" + q;
   if (location.pathname + location.search !== url) {
     if (replace) history.replaceState(null, "", url);
     else history.pushState(null, "", url);
