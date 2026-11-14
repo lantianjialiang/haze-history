@@ -12,8 +12,9 @@
 
 1. 安装 [Node.js](https://nodejs.org/) 22.11 或更新的 LTS。
 2. 在项目根目录执行 `npm ci`。
-3. 执行 `npm run dev`，打开终端里 `Local:` 后的地址（一般为 [http://127.0.0.1:5173/](http://127.0.0.1:5173/)）。
-4. 访问 `http://127.0.0.1:5173/api/health` 检查接口。SQLite 在首次启动时自动创建。
+3. **首次使用**：仓库不含 `data/quotsoft-history.sqlite`（约 150 MB）。按 [docs/data-local.md](docs/data-local.md) 构建历史库；使馆五城另需 `npm run data:embassy`。
+4. 执行 `npm run dev`，打开终端里 `Local:` 后的地址（一般为 [http://127.0.0.1:5173/](http://127.0.0.1:5173/)）。
+5. 访问 `http://127.0.0.1:5173/api/health` 检查接口。`data/haze.sqlite` 接口缓存在首次启动时自动创建。
 
 Windows 可运行 `start-local.cmd`。若 PowerShell 限制 `npm.ps1`，把命令改成 `npm.cmd`。默认不必复制 `.env`；需要改端口、缓存时长或覆盖率时再从 `.env.example` 复制。
 
@@ -22,6 +23,7 @@ Windows 可运行 `start-local.cmd`。若 PowerShell 限制 `npm.ps1`，把命�
 若只需要在本机打开页面、不启动 Node 接口进程，可构建静态包：
 
 ```bash
+# 需先有 data/quotsoft-history.sqlite，见 docs/data-local.md
 npm run data:update      # 按需：刷新近期实测与 quotsoft 增量
 npm run data:embassy     # 按需：刷新使馆 PM2.5 历史
 npm run build:static     # 导出 JSON 到 web/public/data/ 并打包 web/dist
@@ -30,14 +32,15 @@ npm run preview:static   # 本地静态服务预览（不要用 file:// 直接�
 
 构建会把城市和年度序列写入 `web/public/data/`，前端通过相对路径读取。更新数据后需重新执行 `build:static`。页面会提示当前为静态模式。
 
-历史图表依赖 `data/quotsoft-history.sqlite`。仓库里通常已附带该库；若要**从原始 CSV 重建**或在本机重新入库：
+历史图表依赖本机 `data/quotsoft-history.sqlite`（**不在 Git 中**）。构建步骤见 [docs/data-local.md](docs/data-local.md)。常用：
 
 ```bash
-npm run data:cn-air          # 稀疏克隆 CN-AIR 到 data/cn-air（需 Git + Git LFS，约 1–2 GB）
-npm run history -- --national
+npm run data:cn-air              # 可选：CN-AIR 稀疏克隆（Git + Git LFS）
+npm run history -- --national    # 写入 quotsoft-history.sqlite
+npm run data:embassy             # 可选：使馆 PM2.5 库
 ```
 
-说明见 [docs/cn-air-clone.md](docs/cn-air-clone.md)。`data/cn-air` **不提交到 Git**；有本地镜像时 `history` 会先读 CSV，再从 quotsoft 补缺日。可选环境变量：`HISTORY_SKIP_REMOTE=1`、`HISTORY_CONCURRENCY=4`、`HISTORY_DELAY_MS=200`。
+CN-AIR 说明见 [docs/cn-air-clone.md](docs/cn-air-clone.md)。可选环境变量：`HISTORY_SKIP_REMOTE=1`、`HISTORY_CONCURRENCY=4`、`HISTORY_DELAY_MS=200`。
 
 ## 全国历史与后续更新
 

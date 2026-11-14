@@ -2,7 +2,7 @@
 
 全国城市日 CSV 的上游镜像是 [GewisLab/CN-AIR](https://atomgit.com/GewisLab/CN-AIR)（AtomGit）。本仓库**不提交** `data/cn-air/`（体积约 1–2 GB、内嵌 Git + LFS），而是用脚本在本机稀疏检出。
 
-已提交的 `data/quotsoft-history.sqlite` 是入库后的结果；站点默认读 SQLite。只有需要**从原始 CSV 重建**或**按天补缺**时才需要 `cn-air`。
+`npm run history` 的产出是本地的 `data/quotsoft-history.sqlite`（不入 Git）。**从原始 CSV 重建**或**大规模补缺**时建议先跑本脚本；若已有历史库、只补最近几天，可直接 `npm run data:update`。
 
 ## 前置条件
 

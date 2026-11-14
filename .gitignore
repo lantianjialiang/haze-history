@@ -2,9 +2,9 @@ node_modules/
 dist/
 web/dist/
 .env
+data/*.sqlite
 data/*.sqlite-wal
 data/*.sqlite-shm
-data/haze.sqlite*
 data/cn-air/
 data/archive/
 data/update-logs/

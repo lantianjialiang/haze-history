@@ -10,19 +10,21 @@ The UI sits PM2.5 / AQI rules next to a visibility / humidity definition. Thresh
 
 1. Install [Node.js](https://nodejs.org/) 22.11 or a newer LTS release.
 2. From the project root: `npm ci`
-3. `npm run dev` and open the URL after `Local:` (usually [http://127.0.0.1:5173/](http://127.0.0.1:5173/)).
-4. `http://127.0.0.1:5173/api/health` checks the API. SQLite files are created on first start.
+3. **First run:** the repo does not ship `data/quotsoft-history.sqlite` (~150 MB). Build it per [docs/data-local.md](docs/data-local.md); embassy cities also need `npm run data:embassy`.
+4. `npm run dev` and open the URL after `Local:` (usually [http://127.0.0.1:5173/](http://127.0.0.1:5173/)).
+5. `http://127.0.0.1:5173/api/health` checks the API. `data/haze.sqlite` (API cache) is created on first start.
 
 On Windows, `start-local.cmd` installs missing dependencies and starts both services. If PowerShell blocks `npm.ps1`, use `npm.cmd`. Copy `.env.example` to `.env` only when you need to change ports, cache TTL, or coverage.
 
-Historical charts use `data/quotsoft-history.sqlite` (usually committed). To **rebuild from raw CSV** on a new machine:
+Historical charts need a local `data/quotsoft-history.sqlite` (**not in git**). See [docs/data-local.md](docs/data-local.md). Typical flow:
 
 ```bash
-npm run data:cn-air          # sparse CN-AIR clone into data/cn-air (Git + Git LFS, ~1–2 GB)
+npm run data:cn-air              # optional CN-AIR sparse clone (Git + Git LFS)
 npm run history -- --national
+npm run data:embassy             # optional embassy SQLite
 ```
 
-See [docs/cn-air-clone.md](docs/cn-air-clone.md). `data/cn-air` is **not in git**. When present, `history` reads local CSVs first, then fills gaps from quotsoft. Optional env vars: `HISTORY_SKIP_REMOTE=1`, `HISTORY_CONCURRENCY=4`, `HISTORY_DELAY_MS=200`.
+CN-AIR details: [docs/cn-air-clone.md](docs/cn-air-clone.md). Optional env vars: `HISTORY_SKIP_REMOTE=1`, `HISTORY_CONCURRENCY=4`, `HISTORY_DELAY_MS=200`.
 
 Daily refresh: `npm run data:update` (same as `npm run update`). It backfills the last seven national city files into the history database, then refreshes measured / CAMS / weather snapshots. `npm run recent` also archives any completed city-days that are not already in SQLite, and merges finished CAMS and weather days into `data/recent/` so the rolling window does not drop older rows. The current incomplete day stays on the “recent” sources only.
 
