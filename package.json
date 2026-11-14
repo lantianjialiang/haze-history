@@ -1,0 +1,35 @@
+{
+  "name": "haze-history",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "web",
+    "server",
+    "shared"
+  ],
+  "engines": {
+    "node": ">=22.11"
+  },
+  "scripts": {
+    "dev": "tsx watch --experimental-sqlite --env-file-if-exists=.env scripts/dev.ts",
+    "build": "tsc --noEmit && npm run build -w web",
+    "test": "node --experimental-sqlite node_modules/vitest/vitest.mjs run",
+    "test:e2e": "playwright test",
+    "lint": "eslint .",
+    "format": "prettier --write web server shared *.json *.ts *.mjs",
+    "spike": "tsx server/scripts/spike/probe.ts",
+    "history": "tsx --experimental-sqlite server/scripts/download-quotsoft.ts",
+    "recent": "tsx --experimental-sqlite server/scripts/fetch-recent.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^3.2.0"
+  }
+}

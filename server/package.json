@@ -1,0 +1,13 @@
+{
+  "name": "@haze/server",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --experimental-sqlite --env-file-if-exists=../.env index.ts",
+    "start": "tsx --experimental-sqlite --env-file-if-exists=../.env index.ts"
+  },
+  "dependencies": {
+    "fastify": "^5.0.0",
+    "zod": "^3.24.0"
+  }
+}

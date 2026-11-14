@@ -1,0 +1,109 @@
+openapi: 3.1.0
+info:
+  title: Haze History local API
+  version: 0.1.0
+servers:
+  - url: http://127.0.0.1:3001
+paths:
+  /api/health:
+    get:
+      responses:
+        '200': {description: Local API is running in demo mode}
+  /api/geocode:
+    get:
+      parameters:
+        - {name: q, in: query, required: true, schema: {type: string, minLength: 1, maxLength: 80}}
+        - {name: limit, in: query, schema: {type: integer, minimum: 1, maximum: 40, default: 8}}
+      responses:
+        '200': {description: Array of CityRef results, possibly empty}
+        '400': {$ref: '#/components/responses/Error'}
+  /api/sources:
+    get:
+      parameters:
+        - {name: metric, in: query, schema: {$ref: '#/components/schemas/Metric'}}
+      responses:
+        '200': {description: Array of ProviderMeta items}
+        '400': {$ref: '#/components/responses/Error'}
+  /api/series:
+    get:
+      parameters:
+        - {$ref: '#/components/parameters/City'}
+        - {$ref: '#/components/parameters/Provider'}
+        - {$ref: '#/components/parameters/From'}
+        - {$ref: '#/components/parameters/To'}
+        - {name: metrics, in: query, required: true, schema: {type: string}, description: Comma-separated Metric values}
+      responses:
+        '200': {description: SeriesResponse with a record for every day, including null readings}
+        '400': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '503': {$ref: '#/components/responses/Error'}
+  /api/stats:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [cityId, providerId, from, to, rule]
+              properties:
+                cityId: {type: string}
+                providerId: {type: string}
+                from: {type: string, format: date}
+                to: {type: string, format: date}
+                rule: {$ref: '#/components/schemas/Rule'}
+      responses:
+        '200': {description: StatsResponse with yearly and monthly coverage and optional extras}
+        '400': {$ref: '#/components/responses/Error'}
+        '404': {$ref: '#/components/responses/Error'}
+        '503': {$ref: '#/components/responses/Error'}
+  /api/cache/invalidate:
+    post:
+      responses:
+        '200': {description: Cache invalidated, returns the count of removed rows}
+components:
+  parameters:
+    City: {name: cityId, in: query, required: true, schema: {type: string}}
+    Provider: {name: providerId, in: query, required: true, schema: {type: string}}
+    From: {name: from, in: query, required: true, schema: {type: string, format: date}}
+    To: {name: to, in: query, required: true, schema: {type: string, format: date}}
+  responses:
+    Error:
+      description: API error
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [code, message]
+            properties:
+              code: {enum: [GEOCODE_NOT_FOUND, PROVIDER_UNAVAILABLE, PROVIDER_RATE_LIMITED, NO_DATA, INVALID_RULE, INVALID_PARAMS, INTERNAL]}
+              message: {$ref: '#/components/schemas/Localized'}
+              suggestProviderIds: {type: array, items: {type: string}}
+  schemas:
+    Metric: {enum: [pm25, pm10, aqi, visibility_km, rh]}
+    Localized:
+      type: object
+      required: [zh, en]
+      properties:
+        zh: {type: string}
+        en: {type: string}
+    Rule:
+      type: object
+      required: [id, name, combine, conditions, basis]
+      properties:
+        id: {type: string, pattern: '^[a-z0-9-]{1,40}$'}
+        name: {$ref: '#/components/schemas/Localized'}
+        combine: {enum: [AND, OR]}
+        basis: {enum: [pm, meteo]}
+        reference: {type: string}
+        conditions:
+          type: array
+          minItems: 1
+          maxItems: 5
+          items:
+            type: object
+            required: [metric, op, value]
+            properties:
+              metric: {$ref: '#/components/schemas/Metric'}
+              op: {enum: ['>', '>=', '<', '<=']}
+              value: {type: number, minimum: 0}

@@ -1,0 +1,8 @@
+{
+  "city": "CN-510100",
+  "station": "CHM00056294",
+  "year": "2026",
+  "status": 404,
+  "elapsedMs": 860,
+  "raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Error><Code>NoSuchKey</Code><BucketName>datapub-global-historical-climatology-network</BucketName><RequestId>tx00000fd2e3ce6588b63f6-006af7dc60-21af0a4-ncei-nc-1</RequestId><HostId>21af0a4-ncei-nc-1-ncei-nc</HostId></Error>"
+}

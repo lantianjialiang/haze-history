@@ -1,0 +1,223 @@
+{
+  "city": "CN-130100",
+  "source": "geocoding",
+  "annual": {
+    "2013": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2014": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2015": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2016": {
+      "total": 366,
+      "status": "untested",
+      "valid": {}
+    },
+    "2017": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2018": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2019": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2020": {
+      "total": 366,
+      "status": "untested",
+      "valid": {}
+    },
+    "2021": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2022": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2023": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2024": {
+      "total": 366,
+      "status": "untested",
+      "valid": {}
+    },
+    "2025": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2026": {
+      "total": 318,
+      "status": "untested",
+      "valid": {}
+    }
+  },
+  "pmDaily": {},
+  "requests": [
+    {
+      "year": "lookup",
+      "status": "200",
+      "ms": 2498
+    }
+  ],
+  "raw": [
+    {
+      "year": "lookup",
+      "sample": {
+        "results": [
+          {
+            "id": 1795270,
+            "name": "Shijiazhuang",
+            "latitude": 38.04139,
+            "longitude": 114.47861,
+            "elevation": 77,
+            "feature_code": "PPLA",
+            "country_code": "CN",
+            "admin1_id": 1808773,
+            "admin2_id": 1795266,
+            "timezone": "Asia/Shanghai",
+            "population": 5758403,
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Hebei",
+            "admin2": "Shijiazhuang Shi"
+          },
+          {
+            "id": 1795268,
+            "name": "Shijiazhuang",
+            "latitude": 38.57535,
+            "longitude": 112.01593,
+            "elevation": 1332,
+            "feature_code": "PPLA4",
+            "country_code": "CN",
+            "admin1_id": 1795912,
+            "admin2_id": 6642630,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Shanxi",
+            "admin2": "Xinzhou Shi"
+          },
+          {
+            "id": 1547803,
+            "name": "Shijiazhuang",
+            "latitude": 33.275,
+            "longitude": 119.11667,
+            "elevation": 3,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1806260,
+            "admin2_id": 1807649,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Jiangsu",
+            "admin2": "Huai’an Shi"
+          },
+          {
+            "id": 1795269,
+            "name": "Shijiazhuang",
+            "latitude": 38.16722,
+            "longitude": 113.11694,
+            "elevation": 1213,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1795912,
+            "admin2_id": 1787346,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Shanxi",
+            "admin2": "Yangquan Shi"
+          },
+          {
+            "id": 1795271,
+            "name": "Shijiazhuang",
+            "latitude": 35.2,
+            "longitude": 110.78333,
+            "elevation": 510,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1795912,
+            "admin2_id": 1785736,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Shanxi",
+            "admin2": "Yuncheng Shi"
+          },
+          {
+            "id": 1807034,
+            "name": "Shijiazhuang",
+            "latitude": 39.505,
+            "longitude": 114.14722,
+            "elevation": 1103,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1795912,
+            "admin2_id": 2037794,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Shanxi",
+            "admin2": "Datong Shi"
+          },
+          {
+            "id": 1887945,
+            "name": "Shijiazhuang",
+            "latitude": 32.4524,
+            "longitude": 121.07616,
+            "elevation": 5,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1806260,
+            "admin2_id": 1799719,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Jiangsu",
+            "admin2": "Nantong Shi"
+          },
+          {
+            "id": 1896668,
+            "name": "Shijiazhuang",
+            "latitude": 30.62389,
+            "longitude": 121.09361,
+            "elevation": 6,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1784764,
+            "admin2_id": 1805952,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Zhejiang",
+            "admin2": "Jiaxing Shi"
+          }
+        ],
+        "generationtime_ms": 0.18560886
+      }
+    }
+  ]
+}

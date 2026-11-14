@@ -1,0 +1,571 @@
+{
+  "city": "CN-510100",
+  "source": "meteostat",
+  "annual": {
+    "2013": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2014": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 364
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2015": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2016": {
+      "total": 366,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 366
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2017": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2018": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2019": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2020": {
+      "total": 366,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 366
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2021": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2022": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2023": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2024": {
+      "total": 366,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 366
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2025": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2026": {
+      "total": 318,
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "valid": {
+        "vis": null,
+        "rh": null
+      },
+      "paired": {
+        "1": null,
+        "8": null,
+        "18": null
+      }
+    }
+  },
+  "pmDaily": {},
+  "requests": [
+    {
+      "year": "2013",
+      "status": "200",
+      "ms": 2189
+    },
+    {
+      "year": "2014",
+      "status": "200",
+      "ms": 2707
+    },
+    {
+      "year": "2015",
+      "status": "200",
+      "ms": 3205
+    },
+    {
+      "year": "2016",
+      "status": "200",
+      "ms": 2965
+    },
+    {
+      "year": "2017",
+      "status": "200",
+      "ms": 3131
+    },
+    {
+      "year": "2018",
+      "status": "200",
+      "ms": 2813
+    },
+    {
+      "year": "2019",
+      "status": "200",
+      "ms": 3132
+    },
+    {
+      "year": "2020",
+      "status": "200",
+      "ms": 2527
+    },
+    {
+      "year": "2021",
+      "status": "200",
+      "ms": 3255
+    },
+    {
+      "year": "2022",
+      "status": "200",
+      "ms": 2700
+    },
+    {
+      "year": "2023",
+      "status": "200",
+      "ms": 3200
+    },
+    {
+      "year": "2024",
+      "status": "200",
+      "ms": 2446
+    },
+    {
+      "year": "2025",
+      "status": "200",
+      "ms": 4600
+    },
+    {
+      "year": "2026",
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "ms": 15654
+    },
+    {
+      "year": "2012",
+      "status": "200",
+      "ms": 20323
+    }
+  ],
+  "raw": [
+    {
+      "year": "2013",
+      "sample": [
+        [
+          "year",
+          "month",
+          "day",
+          "hour",
+          "temp",
+          "temp_source",
+          "rhum",
+          "rhum_source",
+          "prcp",
+          "prcp_source",
+          "wdir",
+          "wdir_source",
+          "wspd",
+          "wspd_source",
+          "wpgt",
+          "wpgt_source",
+          "pres",
+          "pres_source",
+          "cldc",
+          "cldc_source",
+          "coco",
+          "coco_source"
+        ],
+        [
+          "2013",
+          "1",
+          "1",
+          "0",
+          "-3.0",
+          "isd_lite",
+          "100",
+          "isd_lite",
+          "",
+          "",
+          "320",
+          "isd_lite",
+          "3.6",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "0",
+          "isd_lite",
+          "",
+          ""
+        ],
+        [
+          "2013",
+          "1",
+          "1",
+          "1",
+          "-2.0",
+          "isd_lite",
+          "100",
+          "isd_lite",
+          "",
+          "",
+          "320",
+          "isd_lite",
+          "3.6",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "0",
+          "isd_lite",
+          "",
+          ""
+        ],
+        [
+          "2013",
+          "1",
+          "1",
+          "2",
+          "2.0",
+          "isd_lite",
+          "75",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "3.6",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "0",
+          "isd_lite",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "year": "2014",
+      "sample": [
+        [
+          "year",
+          "month",
+          "day",
+          "hour",
+          "temp",
+          "temp_source",
+          "rhum",
+          "rhum_source",
+          "prcp",
+          "prcp_source",
+          "wdir",
+          "wdir_source",
+          "wspd",
+          "wspd_source",
+          "wpgt",
+          "wpgt_source",
+          "pres",
+          "pres_source",
+          "cldc",
+          "cldc_source",
+          "coco",
+          "coco_source"
+        ],
+        [
+          "2014",
+          "1",
+          "1",
+          "0",
+          "4.0",
+          "isd_lite",
+          "87",
+          "isd_lite",
+          "",
+          "",
+          "150",
+          "isd_lite",
+          "7.2",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "2014",
+          "1",
+          "1",
+          "1",
+          "4.0",
+          "isd_lite",
+          "87",
+          "isd_lite",
+          "",
+          "",
+          "170",
+          "isd_lite",
+          "7.2",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "2014",
+          "1",
+          "1",
+          "2",
+          "5.0",
+          "isd_lite",
+          "81",
+          "isd_lite",
+          "",
+          "",
+          "160",
+          "isd_lite",
+          "7.2",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "year": "2015",
+      "sample": [
+        [
+          "year",
+          "month",
+          "day",
+          "hour",
+          "temp",
+          "temp_source",
+          "rhum",
+          "rhum_source",
+          "prcp",
+          "prcp_source",
+          "wdir",
+          "wdir_source",
+          "wspd",
+          "wspd_source",
+          "wpgt",
+          "wpgt_source",
+          "pres",
+          "pres_source",
+          "cldc",
+          "cldc_source",
+          "coco",
+          "coco_source"
+        ],
+        [
+          "2015",
+          "1",
+          "1",
+          "0",
+          "6.0",
+          "isd_lite",
+          "76",
+          "isd_lite",
+          "",
+          "",
+          "0",
+          "isd_lite",
+          "0.0",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "2015",
+          "1",
+          "1",
+          "1",
+          "6.0",
+          "isd_lite",
+          "81",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "3.6",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "2015",
+          "1",
+          "1",
+          "2",
+          "7.0",
+          "isd_lite",
+          "76",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "3.6",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,562 @@
+[
+  {
+    "id": "CN-110100",
+    "name": {
+      "zh": "北京",
+      "en": "Beijing"
+    },
+    "province": {
+      "zh": "北京",
+      "en": "Beijing"
+    },
+    "lat": 39.9042,
+    "lon": 116.4074,
+    "adcode": "110100"
+  },
+  {
+    "id": "CN-310100",
+    "name": {
+      "zh": "上海",
+      "en": "Shanghai"
+    },
+    "province": {
+      "zh": "上海",
+      "en": "Shanghai"
+    },
+    "lat": 31.2304,
+    "lon": 121.4737,
+    "adcode": "310100"
+  },
+  {
+    "id": "CN-120100",
+    "name": {
+      "zh": "天津",
+      "en": "Tianjin"
+    },
+    "province": {
+      "zh": "天津",
+      "en": "Tianjin"
+    },
+    "lat": 39.0842,
+    "lon": 117.2009,
+    "adcode": "120100"
+  },
+  {
+    "id": "CN-500100",
+    "name": {
+      "zh": "重庆",
+      "en": "Chongqing"
+    },
+    "province": {
+      "zh": "重庆",
+      "en": "Chongqing"
+    },
+    "lat": 29.563,
+    "lon": 106.552,
+    "adcode": "500100"
+  },
+  {
+    "id": "CN-130100",
+    "name": {
+      "zh": "石家庄",
+      "en": "Shijiazhuang"
+    },
+    "province": {
+      "zh": "河北",
+      "en": "Hebei"
+    },
+    "lat": 38.043,
+    "lon": 114.515,
+    "adcode": "130100"
+  },
+  {
+    "id": "CN-140100",
+    "name": {
+      "zh": "太原",
+      "en": "Taiyuan"
+    },
+    "province": {
+      "zh": "山西",
+      "en": "Shanxi"
+    },
+    "lat": 37.871,
+    "lon": 112.549,
+    "adcode": "140100"
+  },
+  {
+    "id": "CN-150100",
+    "name": {
+      "zh": "呼和浩特",
+      "en": "Hohhot"
+    },
+    "province": {
+      "zh": "内蒙古",
+      "en": "Inner Mongolia"
+    },
+    "lat": 40.843,
+    "lon": 111.749,
+    "adcode": "150100"
+  },
+  {
+    "id": "CN-210100",
+    "name": {
+      "zh": "沈阳",
+      "en": "Shenyang"
+    },
+    "province": {
+      "zh": "辽宁",
+      "en": "Liaoning"
+    },
+    "lat": 41.806,
+    "lon": 123.432,
+    "adcode": "210100"
+  },
+  {
+    "id": "CN-220100",
+    "name": {
+      "zh": "长春",
+      "en": "Changchun"
+    },
+    "province": {
+      "zh": "吉林",
+      "en": "Jilin"
+    },
+    "lat": 43.817,
+    "lon": 125.324,
+    "adcode": "220100"
+  },
+  {
+    "id": "CN-230100",
+    "name": {
+      "zh": "哈尔滨",
+      "en": "Harbin"
+    },
+    "province": {
+      "zh": "黑龙江",
+      "en": "Heilongjiang"
+    },
+    "lat": 45.804,
+    "lon": 126.535,
+    "adcode": "230100"
+  },
+  {
+    "id": "CN-320100",
+    "name": {
+      "zh": "南京",
+      "en": "Nanjing"
+    },
+    "province": {
+      "zh": "江苏",
+      "en": "Jiangsu"
+    },
+    "lat": 32.06,
+    "lon": 118.797,
+    "adcode": "320100"
+  },
+  {
+    "id": "CN-330100",
+    "name": {
+      "zh": "杭州",
+      "en": "Hangzhou"
+    },
+    "province": {
+      "zh": "浙江",
+      "en": "Zhejiang"
+    },
+    "lat": 30.274,
+    "lon": 120.156,
+    "adcode": "330100"
+  },
+  {
+    "id": "CN-340100",
+    "name": {
+      "zh": "合肥",
+      "en": "Hefei"
+    },
+    "province": {
+      "zh": "安徽",
+      "en": "Anhui"
+    },
+    "lat": 31.821,
+    "lon": 117.227,
+    "adcode": "340100"
+  },
+  {
+    "id": "CN-350100",
+    "name": {
+      "zh": "福州",
+      "en": "Fuzhou"
+    },
+    "province": {
+      "zh": "福建",
+      "en": "Fujian"
+    },
+    "lat": 26.075,
+    "lon": 119.297,
+    "adcode": "350100"
+  },
+  {
+    "id": "CN-360100",
+    "name": {
+      "zh": "南昌",
+      "en": "Nanchang"
+    },
+    "province": {
+      "zh": "江西",
+      "en": "Jiangxi"
+    },
+    "lat": 28.682,
+    "lon": 115.858,
+    "adcode": "360100"
+  },
+  {
+    "id": "CN-370100",
+    "name": {
+      "zh": "济南",
+      "en": "Jinan"
+    },
+    "province": {
+      "zh": "山东",
+      "en": "Shandong"
+    },
+    "lat": 36.651,
+    "lon": 117.12,
+    "adcode": "370100"
+  },
+  {
+    "id": "CN-410100",
+    "name": {
+      "zh": "郑州",
+      "en": "Zhengzhou"
+    },
+    "province": {
+      "zh": "河南",
+      "en": "Henan"
+    },
+    "lat": 34.747,
+    "lon": 113.625,
+    "adcode": "410100"
+  },
+  {
+    "id": "CN-420100",
+    "name": {
+      "zh": "武汉",
+      "en": "Wuhan"
+    },
+    "province": {
+      "zh": "湖北",
+      "en": "Hubei"
+    },
+    "lat": 30.593,
+    "lon": 114.306,
+    "adcode": "420100"
+  },
+  {
+    "id": "CN-430100",
+    "name": {
+      "zh": "长沙",
+      "en": "Changsha"
+    },
+    "province": {
+      "zh": "湖南",
+      "en": "Hunan"
+    },
+    "lat": 28.228,
+    "lon": 112.939,
+    "adcode": "430100"
+  },
+  {
+    "id": "CN-440100",
+    "name": {
+      "zh": "广州",
+      "en": "Guangzhou"
+    },
+    "province": {
+      "zh": "广东",
+      "en": "Guangdong"
+    },
+    "lat": 23.129,
+    "lon": 113.264,
+    "adcode": "440100"
+  },
+  {
+    "id": "CN-450100",
+    "name": {
+      "zh": "南宁",
+      "en": "Nanning"
+    },
+    "province": {
+      "zh": "广西",
+      "en": "Guangxi"
+    },
+    "lat": 22.817,
+    "lon": 108.367,
+    "adcode": "450100"
+  },
+  {
+    "id": "CN-460100",
+    "name": {
+      "zh": "海口",
+      "en": "Haikou"
+    },
+    "province": {
+      "zh": "海南",
+      "en": "Hainan"
+    },
+    "lat": 20.044,
+    "lon": 110.2,
+    "adcode": "460100"
+  },
+  {
+    "id": "CN-510100",
+    "name": {
+      "zh": "成都",
+      "en": "Chengdu"
+    },
+    "province": {
+      "zh": "四川",
+      "en": "Sichuan"
+    },
+    "lat": 30.573,
+    "lon": 104.067,
+    "adcode": "510100"
+  },
+  {
+    "id": "CN-520100",
+    "name": {
+      "zh": "贵阳",
+      "en": "Guiyang"
+    },
+    "province": {
+      "zh": "贵州",
+      "en": "Guizhou"
+    },
+    "lat": 26.647,
+    "lon": 106.63,
+    "adcode": "520100"
+  },
+  {
+    "id": "CN-530100",
+    "name": {
+      "zh": "昆明",
+      "en": "Kunming"
+    },
+    "province": {
+      "zh": "云南",
+      "en": "Yunnan"
+    },
+    "lat": 24.88,
+    "lon": 102.833,
+    "adcode": "530100"
+  },
+  {
+    "id": "CN-540100",
+    "name": {
+      "zh": "拉萨",
+      "en": "Lhasa"
+    },
+    "province": {
+      "zh": "西藏",
+      "en": "Tibet"
+    },
+    "lat": 29.652,
+    "lon": 91.172,
+    "adcode": "540100"
+  },
+  {
+    "id": "CN-610100",
+    "name": {
+      "zh": "西安",
+      "en": "Xi'an"
+    },
+    "province": {
+      "zh": "陕西",
+      "en": "Shaanxi"
+    },
+    "lat": 34.342,
+    "lon": 108.94,
+    "adcode": "610100"
+  },
+  {
+    "id": "CN-620100",
+    "name": {
+      "zh": "兰州",
+      "en": "Lanzhou"
+    },
+    "province": {
+      "zh": "甘肃",
+      "en": "Gansu"
+    },
+    "lat": 36.061,
+    "lon": 103.834,
+    "adcode": "620100"
+  },
+  {
+    "id": "CN-630100",
+    "name": {
+      "zh": "西宁",
+      "en": "Xining"
+    },
+    "province": {
+      "zh": "青海",
+      "en": "Qinghai"
+    },
+    "lat": 36.617,
+    "lon": 101.778,
+    "adcode": "630100"
+  },
+  {
+    "id": "CN-640100",
+    "name": {
+      "zh": "银川",
+      "en": "Yinchuan"
+    },
+    "province": {
+      "zh": "宁夏",
+      "en": "Ningxia"
+    },
+    "lat": 38.487,
+    "lon": 106.231,
+    "adcode": "640100"
+  },
+  {
+    "id": "CN-650100",
+    "name": {
+      "zh": "乌鲁木齐",
+      "en": "Urumqi"
+    },
+    "province": {
+      "zh": "新疆",
+      "en": "Xinjiang"
+    },
+    "lat": 43.826,
+    "lon": 87.617,
+    "adcode": "650100"
+  },
+  {
+    "id": "CN-440300",
+    "name": {
+      "zh": "深圳",
+      "en": "Shenzhen"
+    },
+    "province": {
+      "zh": "广东",
+      "en": "Guangdong"
+    },
+    "lat": 22.543,
+    "lon": 114.058,
+    "adcode": "440300"
+  },
+  {
+    "id": "CN-370200",
+    "name": {
+      "zh": "青岛",
+      "en": "Qingdao"
+    },
+    "province": {
+      "zh": "山东",
+      "en": "Shandong"
+    },
+    "lat": 36.067,
+    "lon": 120.383,
+    "adcode": "370200"
+  },
+  {
+    "id": "CN-210200",
+    "name": {
+      "zh": "大连",
+      "en": "Dalian"
+    },
+    "province": {
+      "zh": "辽宁",
+      "en": "Liaoning"
+    },
+    "lat": 38.914,
+    "lon": 121.615,
+    "adcode": "210200"
+  },
+  {
+    "id": "CN-330200",
+    "name": {
+      "zh": "宁波",
+      "en": "Ningbo"
+    },
+    "province": {
+      "zh": "浙江",
+      "en": "Zhejiang"
+    },
+    "lat": 29.869,
+    "lon": 121.544,
+    "adcode": "330200"
+  },
+  {
+    "id": "CN-350200",
+    "name": {
+      "zh": "厦门",
+      "en": "Xiamen"
+    },
+    "province": {
+      "zh": "福建",
+      "en": "Fujian"
+    },
+    "lat": 24.48,
+    "lon": 118.089,
+    "adcode": "350200"
+  },
+  {
+    "id": "CN-320500",
+    "name": {
+      "zh": "苏州",
+      "en": "Suzhou"
+    },
+    "province": {
+      "zh": "江苏",
+      "en": "Jiangsu"
+    },
+    "lat": 31.299,
+    "lon": 120.585,
+    "adcode": "320500"
+  },
+  {
+    "id": "CN-320200",
+    "name": {
+      "zh": "无锡",
+      "en": "Wuxi"
+    },
+    "province": {
+      "zh": "江苏",
+      "en": "Jiangsu"
+    },
+    "lat": 31.491,
+    "lon": 120.312,
+    "adcode": "320200"
+  },
+  {
+    "id": "CN-130200",
+    "name": {
+      "zh": "唐山",
+      "en": "Tangshan"
+    },
+    "province": {
+      "zh": "河北",
+      "en": "Hebei"
+    },
+    "lat": 39.631,
+    "lon": 118.18,
+    "adcode": "130200"
+  },
+  {
+    "id": "CN-441900",
+    "name": {
+      "zh": "东莞",
+      "en": "Dongguan"
+    },
+    "province": {
+      "zh": "广东",
+      "en": "Guangdong"
+    },
+    "lat": 23.021,
+    "lon": 113.752,
+    "adcode": "441900"
+  }
+]

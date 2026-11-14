@@ -1,0 +1,159 @@
+{
+  "city": "CN-650100",
+  "source": "geocoding",
+  "annual": {
+    "2013": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2014": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2015": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2016": {
+      "total": 366,
+      "status": "untested",
+      "valid": {}
+    },
+    "2017": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2018": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2019": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2020": {
+      "total": 366,
+      "status": "untested",
+      "valid": {}
+    },
+    "2021": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2022": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2023": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2024": {
+      "total": 366,
+      "status": "untested",
+      "valid": {}
+    },
+    "2025": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2026": {
+      "total": 318,
+      "status": "untested",
+      "valid": {}
+    }
+  },
+  "pmDaily": {},
+  "requests": [
+    {
+      "year": "lookup",
+      "status": "200",
+      "ms": 3921
+    }
+  ],
+  "raw": [
+    {
+      "year": "lookup",
+      "sample": {
+        "results": [
+          {
+            "id": 1529102,
+            "name": "Ürümqi",
+            "latitude": 43.80096,
+            "longitude": 87.60046,
+            "elevation": 862,
+            "feature_code": "PPLA",
+            "country_code": "CN",
+            "admin1_id": 1529047,
+            "admin2_id": 1529101,
+            "timezone": "Asia/Urumqi",
+            "population": 4054000,
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Xinjiang",
+            "admin2": "Urumqi Shi"
+          },
+          {
+            "id": 11493729,
+            "name": "Urumqi Pap Heliport",
+            "latitude": 43.8154,
+            "longitude": 87.6885,
+            "elevation": 893,
+            "feature_code": "AIRH",
+            "country_code": "CN",
+            "admin1_id": 1529047,
+            "admin2_id": 1529101,
+            "timezone": "Asia/Urumqi",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Xinjiang",
+            "admin2": "Urumqi Shi"
+          },
+          {
+            "id": 11493714,
+            "name": "Wulumuqi South",
+            "latitude": 43.46653,
+            "longitude": 87.53123,
+            "elevation": 1541,
+            "feature_code": "AIRB",
+            "country_code": "CN",
+            "admin1_id": 1529047,
+            "admin2_id": 1529101,
+            "timezone": "Asia/Urumqi",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Xinjiang",
+            "admin2": "Urumqi Shi"
+          },
+          {
+            "id": 6301396,
+            "name": "Ürümqi Diwopu International Airport",
+            "latitude": 43.90711,
+            "longitude": 87.47424,
+            "elevation": 647,
+            "feature_code": "AIRP",
+            "country_code": "CN",
+            "admin1_id": 1529047,
+            "admin2_id": 1529101,
+            "timezone": "Asia/Urumqi",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Xinjiang",
+            "admin2": "Urumqi Shi"
+          }
+        ],
+        "generationtime_ms": 0.2834797
+      }
+    }
+  ]
+}

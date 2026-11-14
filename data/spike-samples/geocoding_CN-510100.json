@@ -1,0 +1,223 @@
+{
+  "city": "CN-510100",
+  "source": "geocoding",
+  "annual": {
+    "2013": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2014": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2015": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2016": {
+      "total": 366,
+      "status": "untested",
+      "valid": {}
+    },
+    "2017": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2018": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2019": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2020": {
+      "total": 366,
+      "status": "untested",
+      "valid": {}
+    },
+    "2021": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2022": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2023": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2024": {
+      "total": 366,
+      "status": "untested",
+      "valid": {}
+    },
+    "2025": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2026": {
+      "total": 318,
+      "status": "untested",
+      "valid": {}
+    }
+  },
+  "pmDaily": {},
+  "requests": [
+    {
+      "year": "lookup",
+      "status": "200",
+      "ms": 1670
+    }
+  ],
+  "raw": [
+    {
+      "year": "lookup",
+      "sample": {
+        "results": [
+          {
+            "id": 1815286,
+            "name": "Chengdu",
+            "latitude": 30.66667,
+            "longitude": 104.06667,
+            "elevation": 499,
+            "feature_code": "PPLA",
+            "country_code": "CN",
+            "admin1_id": 1794299,
+            "admin2_id": 1815285,
+            "timezone": "Asia/Shanghai",
+            "population": 20937757,
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Sichuan",
+            "admin2": "Chengdu Shi"
+          },
+          {
+            "id": 7472191,
+            "name": "Chengdu",
+            "latitude": 26.36828,
+            "longitude": 115.34289,
+            "elevation": 157,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1806222,
+            "admin2_id": 1810636,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Jiangxi",
+            "admin2": "Ganzhou Shi"
+          },
+          {
+            "id": 9614220,
+            "name": "Chengdu",
+            "latitude": 26.983,
+            "longitude": 114.207,
+            "elevation": 138,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1806222,
+            "admin2_id": 1806430,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Jiangxi",
+            "admin2": "Ji’an Shi"
+          },
+          {
+            "id": 10198468,
+            "name": "Chengdu",
+            "latitude": 30.7673,
+            "longitude": 102.121,
+            "elevation": 2518,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1794299,
+            "admin2_id": 1818175,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Sichuan",
+            "admin2": "Aba Zangzu Qiangzu Zizhizhou"
+          },
+          {
+            "id": 10154883,
+            "name": "Chengdu Nongcun",
+            "latitude": 31.11537,
+            "longitude": 107.44296,
+            "elevation": 322,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1794299,
+            "admin2_id": 1813324,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Sichuan",
+            "admin2": "Dazhou Shi"
+          },
+          {
+            "id": 7884637,
+            "name": "Chengdun",
+            "latitude": 30.0516,
+            "longitude": 114.31147,
+            "elevation": 35,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1806949,
+            "admin2_id": 1791243,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Hubei",
+            "admin2": "Wuhan Shi"
+          },
+          {
+            "id": 8035152,
+            "name": "Chengdun",
+            "latitude": 33.52471,
+            "longitude": 119.74542,
+            "elevation": 1,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1806260,
+            "admin2_id": 1787743,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Jiangsu",
+            "admin2": "Yancheng Shi"
+          },
+          {
+            "id": 9945252,
+            "name": "Chengduo",
+            "latitude": 24.3812,
+            "longitude": 108.72,
+            "elevation": 247,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1809867,
+            "admin2_id": 7909222,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Guangxi",
+            "admin2": "Laibin Shi"
+          }
+        ],
+        "generationtime_ms": 0.21624565
+      }
+    }
+  ]
+}

@@ -1,0 +1,299 @@
+{
+  "city": "CN-110100",
+  "source": "noaa-isd",
+  "station": {
+    "id": "54511099999",
+    "distanceKm": 11.08
+  },
+  "annual": {
+    "2013": {
+      "total": 365,
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "valid": {
+        "vis": null,
+        "rh": null
+      },
+      "paired": {
+        "1": null,
+        "8": null,
+        "18": null
+      }
+    },
+    "2014": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 141,
+        "rh": 364
+      },
+      "paired": {
+        "1": 365,
+        "8": 349,
+        "18": 141
+      }
+    },
+    "2015": {
+      "total": 365,
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "valid": {
+        "vis": null,
+        "rh": null
+      },
+      "paired": {
+        "1": null,
+        "8": null,
+        "18": null
+      }
+    },
+    "2016": {
+      "total": 366,
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "valid": {
+        "vis": null,
+        "rh": null
+      },
+      "paired": {
+        "1": null,
+        "8": null,
+        "18": null
+      }
+    },
+    "2017": {
+      "total": 365,
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "valid": {
+        "vis": null,
+        "rh": null
+      },
+      "paired": {
+        "1": null,
+        "8": null,
+        "18": null
+      }
+    },
+    "2018": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 362,
+        "rh": 361
+      },
+      "paired": {
+        "1": 365,
+        "8": 365,
+        "18": 361
+      }
+    },
+    "2019": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 365,
+        "rh": 365
+      },
+      "paired": {
+        "1": 365,
+        "8": 365,
+        "18": 365
+      }
+    },
+    "2020": {
+      "total": 366,
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "valid": {
+        "vis": null,
+        "rh": null
+      },
+      "paired": {
+        "1": null,
+        "8": null,
+        "18": null
+      }
+    },
+    "2021": {
+      "total": 365,
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "valid": {
+        "vis": null,
+        "rh": null
+      },
+      "paired": {
+        "1": null,
+        "8": null,
+        "18": null
+      }
+    },
+    "2022": {
+      "total": 365,
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "valid": {
+        "vis": null,
+        "rh": null
+      },
+      "paired": {
+        "1": null,
+        "8": null,
+        "18": null
+      }
+    },
+    "2023": {
+      "total": 365,
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "valid": {
+        "vis": null,
+        "rh": null
+      },
+      "paired": {
+        "1": null,
+        "8": null,
+        "18": null
+      }
+    },
+    "2024": {
+      "total": 366,
+      "status": "200",
+      "valid": {
+        "vis": 351,
+        "rh": 351
+      },
+      "paired": {
+        "1": 359,
+        "8": 354,
+        "18": 351
+      }
+    },
+    "2025": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 235,
+        "rh": 235
+      },
+      "paired": {
+        "1": 237,
+        "8": 236,
+        "18": 235
+      }
+    },
+    "2026": {
+      "total": 318,
+      "status": "404",
+      "valid": {
+        "vis": 0,
+        "rh": 0
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    }
+  },
+  "pmDaily": {},
+  "requests": [
+    {
+      "year": "2013",
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "ms": 15004
+    },
+    {
+      "year": "2014",
+      "status": "200",
+      "ms": 14767
+    },
+    {
+      "year": "2015",
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "ms": 15016
+    },
+    {
+      "year": "2016",
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "ms": 37694
+    },
+    {
+      "year": "2017",
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "ms": 15318
+    },
+    {
+      "year": "2018",
+      "status": "200",
+      "ms": 8772
+    },
+    {
+      "year": "2019",
+      "status": "200",
+      "ms": 5396
+    },
+    {
+      "year": "2020",
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "ms": 15411
+    },
+    {
+      "year": "2021",
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "ms": 15082
+    },
+    {
+      "year": "2022",
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "ms": 15004
+    },
+    {
+      "year": "2023",
+      "status": "TimeoutError: The operation was aborted due to timeout",
+      "ms": 15244
+    },
+    {
+      "year": "2024",
+      "status": "200",
+      "ms": 2727
+    },
+    {
+      "year": "2025",
+      "status": "200",
+      "ms": 1012
+    },
+    {
+      "year": "2026",
+      "status": "404",
+      "ms": 256
+    },
+    {
+      "year": "2012",
+      "status": "200",
+      "ms": 2679
+    }
+  ],
+  "raw": [
+    {
+      "year": "2014",
+      "sample": [
+        "0156545110999992014010100004+39933+116283FM-12+005599999V0201401N002019999999N006000199+99999-01251101411",
+        "0080545110999992014010100004+40080+116585FM-15+003599999V0202901N006019999999Y999999999+00601-01801999999",
+        "0088545110999992014010100304+40080+116585FM-15+003599999V0202801V006019999999Y999999999+00601-01901999999",
+        "0088545110999992014010101004+40080+116585FM-15+003599999V0202901V005019999999Y999999999+00701-01801999999"
+      ]
+    },
+    {
+      "year": "2018",
+      "sample": [
+        "0125545110999992018010100004+39933+116283FM-12+005599999V0200701N002019999999N015000199-00561-01591102861",
+        "0089545110999992018010100004+40080+116585FM-15+003599999V0200301V002019999999Y009900199-00501-01701999999",
+        "0081545110999992018010100304+40080+116585FM-15+003599999V0200301N004019999999Y009900199-00301-01601999999",
+        "0081545110999992018010101004+40080+116585FM-15+003599999V0200201N003019999999Y009900199-00201-01601999999"
+      ]
+    },
+    {
+      "year": "2019",
+      "sample": [
+        "0181545110999992019010100004+39933+116283FM-12+005599999V0200401N001019999999N006000199-01191-01681104141",
+        "0089545110999992019010100004+40080+116585FM-15+003599999V0203401V002019999999Y009900199-01101-01701999999",
+        "0081545110999992019010100304+40080+116585FM-15+003599999V0203501N003019999999Y009900199-01101-01701999999",
+        "0081545110999992019010101004+40080+116585FM-15+003599999V0203501N004019999999Y009900199-00701-01401999999"
+      ]
+    }
+  ]
+}

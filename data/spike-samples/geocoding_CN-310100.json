@@ -1,0 +1,223 @@
+{
+  "city": "CN-310100",
+  "source": "geocoding",
+  "annual": {
+    "2013": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2014": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2015": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2016": {
+      "total": 366,
+      "status": "untested",
+      "valid": {}
+    },
+    "2017": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2018": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2019": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2020": {
+      "total": 366,
+      "status": "untested",
+      "valid": {}
+    },
+    "2021": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2022": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2023": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2024": {
+      "total": 366,
+      "status": "untested",
+      "valid": {}
+    },
+    "2025": {
+      "total": 365,
+      "status": "untested",
+      "valid": {}
+    },
+    "2026": {
+      "total": 318,
+      "status": "untested",
+      "valid": {}
+    }
+  },
+  "pmDaily": {},
+  "requests": [
+    {
+      "year": "lookup",
+      "status": "200",
+      "ms": 1436
+    }
+  ],
+  "raw": [
+    {
+      "year": "lookup",
+      "sample": {
+        "results": [
+          {
+            "id": 1796236,
+            "name": "Shanghai",
+            "latitude": 31.22222,
+            "longitude": 121.45806,
+            "elevation": 12,
+            "feature_code": "PPLA",
+            "country_code": "CN",
+            "admin1_id": 1796231,
+            "admin2_id": 12324204,
+            "timezone": "Asia/Shanghai",
+            "population": 24874500,
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Shanghai Municipality",
+            "admin2": "Shanghai Municipality"
+          },
+          {
+            "id": 10138757,
+            "name": "Shanghai",
+            "latitude": 27.0741,
+            "longitude": 100.107,
+            "elevation": 2515,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1785694,
+            "admin2_id": 1803666,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Yunnan",
+            "admin2": "Lijiang Shi"
+          },
+          {
+            "id": 10141134,
+            "name": "Shanghai",
+            "latitude": 26.5058,
+            "longitude": 103.158,
+            "elevation": 1955,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1785694,
+            "admin2_id": 1797315,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Yunnan",
+            "admin2": "Qujing Shi"
+          },
+          {
+            "id": 10158854,
+            "name": "Shanghai",
+            "latitude": 26.0577,
+            "longitude": 103.282,
+            "elevation": 2953,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1785694,
+            "admin2_id": 1804649,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Yunnan",
+            "admin2": "Kunming Shi"
+          },
+          {
+            "id": 10215464,
+            "name": "Shanghai",
+            "latitude": 27.5656,
+            "longitude": 101.432,
+            "elevation": 2407,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1794299,
+            "admin2_id": 1803984,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Sichuan",
+            "admin2": "Liangshan Yi Autonomous Prefecture"
+          },
+          {
+            "id": 7072498,
+            "name": "Shanghaicun",
+            "latitude": 29.32955,
+            "longitude": 121.05804,
+            "elevation": 321,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1784764,
+            "admin2_id": 1795854,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Zhejiang",
+            "admin2": "Shaoxing Shi"
+          },
+          {
+            "id": 10632702,
+            "name": "Shanghaicun",
+            "latitude": 36.12147,
+            "longitude": 114.7891,
+            "elevation": 49,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1808520,
+            "admin2_id": 1817942,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Henan",
+            "admin2": "Anyang Shi"
+          },
+          {
+            "id": 6873441,
+            "name": "Shanghaiba",
+            "latitude": 27.97731,
+            "longitude": 105.44314,
+            "elevation": 1092,
+            "feature_code": "PPL",
+            "country_code": "CN",
+            "admin1_id": 1794299,
+            "admin2_id": 1801637,
+            "timezone": "Asia/Shanghai",
+            "country_id": 1814991,
+            "country": "China",
+            "admin1": "Sichuan",
+            "admin2": "Luzhou Shi"
+          }
+        ],
+        "generationtime_ms": 0.18155575
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "full": {
+    "cities": 40,
+    "requests": 200,
+    "failedRequests": 3,
+    "failedCities": 3,
+    "ms": 200302
+  },
+  "incremental": {
+    "cities": 40,
+    "requests": 40,
+    "failedRequests": 0,
+    "failedCities": 0,
+    "ms": 39235
+  }
+}

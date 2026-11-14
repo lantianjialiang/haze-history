@@ -1,0 +1,118 @@
+{
+  "city": "CN-510100",
+  "source": "openaq",
+  "annual": {
+    "2013": {
+      "total": 365,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    },
+    "2014": {
+      "total": 365,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    },
+    "2015": {
+      "total": 365,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    },
+    "2016": {
+      "total": 366,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    },
+    "2017": {
+      "total": 365,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    },
+    "2018": {
+      "total": 365,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    },
+    "2019": {
+      "total": 365,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    },
+    "2020": {
+      "total": 366,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    },
+    "2021": {
+      "total": 365,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    },
+    "2022": {
+      "total": 365,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    },
+    "2023": {
+      "total": 365,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    },
+    "2024": {
+      "total": 366,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    },
+    "2025": {
+      "total": 365,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    },
+    "2026": {
+      "total": 318,
+      "status": "untested",
+      "valid": {
+        "pm25": null
+      }
+    }
+  },
+  "pmDaily": {},
+  "requests": [
+    {
+      "year": "lookup",
+      "status": "401",
+      "ms": 2441
+    }
+  ],
+  "raw": [
+    {
+      "year": "lookup",
+      "sample": "{\"message\": \"Unauthorized. A valid API key must be provided in the X-API-Key header.\"}"
+    }
+  ]
+}

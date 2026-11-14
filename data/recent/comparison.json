@@ -1,0 +1,853 @@
+{
+  "fetchedAt": "2026-11-14T06:57:20.525Z",
+  "anchor": "2026-11-14 14:00:00",
+  "quotsoftDays": 0,
+  "cnemcHours": 14,
+  "measuredMinHours": 12,
+  "cams": {
+    "from": "2026-10-15",
+    "to": "2026-11-13"
+  },
+  "cities": [
+    {
+      "id": "CN-110100",
+      "name": {
+        "zh": "北京",
+        "en": "Beijing"
+      },
+      "latest": {
+        "id": "CN-110100",
+        "pm25": 113.1,
+        "pm25_24h": 87.6,
+        "aqi": 152,
+        "stations": 23
+      },
+      "cams24h": 212.1,
+      "overlapDays": 1,
+      "bias": 139.7,
+      "measuredOver75": 0,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-310100",
+      "name": {
+        "zh": "上海",
+        "en": "Shanghai"
+      },
+      "latest": {
+        "id": "CN-310100",
+        "pm25": 27.9,
+        "pm25_24h": 30.5,
+        "aqi": 41,
+        "stations": 18
+      },
+      "cams24h": 78.6,
+      "overlapDays": 1,
+      "bias": 46.2,
+      "measuredOver75": 0,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-120100",
+      "name": {
+        "zh": "天津",
+        "en": "Tianjin"
+      },
+      "latest": {
+        "id": "CN-120100",
+        "pm25": 139.3,
+        "pm25_24h": 120.6,
+        "aqi": 184,
+        "stations": 20
+      },
+      "cams24h": 194,
+      "overlapDays": 1,
+      "bias": 75.8,
+      "measuredOver75": 1,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-500100",
+      "name": {
+        "zh": "重庆",
+        "en": "Chongqing"
+      },
+      "latest": {
+        "id": "CN-500100",
+        "pm25": 46.3,
+        "pm25_24h": 59.2,
+        "aqi": 74,
+        "stations": 35
+      },
+      "cams24h": 109.7,
+      "overlapDays": 1,
+      "bias": 51.7,
+      "measuredOver75": 0,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-130100",
+      "name": {
+        "zh": "石家庄",
+        "en": "Shijiazhuang"
+      },
+      "latest": {
+        "id": "CN-130100",
+        "pm25": 121.3,
+        "pm25_24h": 123.2,
+        "aqi": 159,
+        "stations": 11
+      },
+      "cams24h": 125.7,
+      "overlapDays": 1,
+      "bias": 15.2,
+      "measuredOver75": 1,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-140100",
+      "name": {
+        "zh": "太原",
+        "en": "Taiyuan"
+      },
+      "latest": {
+        "id": "CN-140100",
+        "pm25": 57.6,
+        "pm25_24h": 64.8,
+        "aqi": 94,
+        "stations": 10
+      },
+      "cams24h": 34.4,
+      "overlapDays": 1,
+      "bias": -15.4,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-150100",
+      "name": {
+        "zh": "呼和浩特",
+        "en": "Hohhot"
+      },
+      "latest": {
+        "id": "CN-150100",
+        "pm25": 47.9,
+        "pm25_24h": 44,
+        "aqi": 83,
+        "stations": 8
+      },
+      "cams24h": 61.3,
+      "overlapDays": 1,
+      "bias": 22.3,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-210100",
+      "name": {
+        "zh": "沈阳",
+        "en": "Shenyang"
+      },
+      "latest": {
+        "id": "CN-210100",
+        "pm25": 107.2,
+        "pm25_24h": 128.4,
+        "aqi": 145,
+        "stations": 10
+      },
+      "cams24h": 82.9,
+      "overlapDays": 1,
+      "bias": -3.3,
+      "measuredOver75": 1,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-220100",
+      "name": {
+        "zh": "长春",
+        "en": "Changchun"
+      },
+      "latest": {
+        "id": "CN-220100",
+        "pm25": 67.4,
+        "pm25_24h": 92.6,
+        "aqi": 107,
+        "stations": 9
+      },
+      "cams24h": 95.5,
+      "overlapDays": 1,
+      "bias": -2.2,
+      "measuredOver75": 1,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-230100",
+      "name": {
+        "zh": "哈尔滨",
+        "en": "Harbin"
+      },
+      "latest": {
+        "id": "CN-230100",
+        "pm25": 47.2,
+        "pm25_24h": 134.2,
+        "aqi": 74,
+        "stations": 11
+      },
+      "cams24h": 79.4,
+      "overlapDays": 1,
+      "bias": -79.5,
+      "measuredOver75": 1,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-320100",
+      "name": {
+        "zh": "南京",
+        "en": "Nanjing"
+      },
+      "latest": {
+        "id": "CN-320100",
+        "pm25": 17.2,
+        "pm25_24h": 35,
+        "aqi": 34,
+        "stations": 13
+      },
+      "cams24h": 78.8,
+      "overlapDays": 1,
+      "bias": 39.6,
+      "measuredOver75": 0,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-330100",
+      "name": {
+        "zh": "杭州",
+        "en": "Hangzhou"
+      },
+      "latest": {
+        "id": "CN-330100",
+        "pm25": 27.6,
+        "pm25_24h": 53.8,
+        "aqi": 42,
+        "stations": 12
+      },
+      "cams24h": 140.8,
+      "overlapDays": 1,
+      "bias": 86.8,
+      "measuredOver75": 0,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-340100",
+      "name": {
+        "zh": "合肥",
+        "en": "Hefei"
+      },
+      "latest": {
+        "id": "CN-340100",
+        "pm25": 20.7,
+        "pm25_24h": 18.7,
+        "aqi": 34,
+        "stations": 10
+      },
+      "cams24h": 45.3,
+      "overlapDays": 1,
+      "bias": 13,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-350100",
+      "name": {
+        "zh": "福州",
+        "en": "Fuzhou"
+      },
+      "latest": {
+        "id": "CN-350100",
+        "pm25": 23.2,
+        "pm25_24h": 16.2,
+        "aqi": 37,
+        "stations": 6
+      },
+      "cams24h": 38.1,
+      "overlapDays": 1,
+      "bias": 22.6,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-360100",
+      "name": {
+        "zh": "南昌",
+        "en": "Nanchang"
+      },
+      "latest": {
+        "id": "CN-360100",
+        "pm25": 60.5,
+        "pm25_24h": 49,
+        "aqi": 97,
+        "stations": 8
+      },
+      "cams24h": 68.1,
+      "overlapDays": 1,
+      "bias": 27.3,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-370100",
+      "name": {
+        "zh": "济南",
+        "en": "Jinan"
+      },
+      "latest": {
+        "id": "CN-370100",
+        "pm25": 56.2,
+        "pm25_24h": 65.1,
+        "aqi": 90,
+        "stations": 14
+      },
+      "cams24h": 109.2,
+      "overlapDays": 1,
+      "bias": 56.8,
+      "measuredOver75": 0,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-410100",
+      "name": {
+        "zh": "郑州",
+        "en": "Zhengzhou"
+      },
+      "latest": {
+        "id": "CN-410100",
+        "pm25": 82.7,
+        "pm25_24h": 68.6,
+        "aqi": 121,
+        "stations": 11
+      },
+      "cams24h": 82.2,
+      "overlapDays": 1,
+      "bias": 20.2,
+      "measuredOver75": 0,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-420100",
+      "name": {
+        "zh": "武汉",
+        "en": "Wuhan"
+      },
+      "latest": {
+        "id": "CN-420100",
+        "pm25": 28.1,
+        "pm25_24h": 22.9,
+        "aqi": 44,
+        "stations": 9
+      },
+      "cams24h": 72.5,
+      "overlapDays": 1,
+      "bias": 41.8,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-430100",
+      "name": {
+        "zh": "长沙",
+        "en": "Changsha"
+      },
+      "latest": {
+        "id": "CN-430100",
+        "pm25": 45,
+        "pm25_24h": 41.8,
+        "aqi": 70,
+        "stations": 9
+      },
+      "cams24h": 79.8,
+      "overlapDays": 1,
+      "bias": 41.9,
+      "measuredOver75": 0,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-440100",
+      "name": {
+        "zh": "广州",
+        "en": "Guangzhou"
+      },
+      "latest": {
+        "id": "CN-440100",
+        "pm25": 6.9,
+        "pm25_24h": 23.5,
+        "aqi": 20,
+        "stations": 20
+      },
+      "cams24h": 78.6,
+      "overlapDays": 1,
+      "bias": 43.3,
+      "measuredOver75": 0,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-450100",
+      "name": {
+        "zh": "南宁",
+        "en": "Nanning"
+      },
+      "latest": {
+        "id": "CN-450100",
+        "pm25": 11.9,
+        "pm25_24h": 31.8,
+        "aqi": 33,
+        "stations": 9
+      },
+      "cams24h": 28.3,
+      "overlapDays": 1,
+      "bias": -21.8,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-460100",
+      "name": {
+        "zh": "海口",
+        "en": "Haikou"
+      },
+      "latest": {
+        "id": "CN-460100",
+        "pm25": 9.2,
+        "pm25_24h": 16.7,
+        "aqi": 32,
+        "stations": 6
+      },
+      "cams24h": 10.6,
+      "overlapDays": 1,
+      "bias": -1.1,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-510100",
+      "name": {
+        "zh": "成都",
+        "en": "Chengdu"
+      },
+      "latest": {
+        "id": "CN-510100",
+        "pm25": 55.7,
+        "pm25_24h": 51.8,
+        "aqi": 92,
+        "stations": 13
+      },
+      "cams24h": 62,
+      "overlapDays": 1,
+      "bias": 16.2,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-520100",
+      "name": {
+        "zh": "贵阳",
+        "en": "Guiyang"
+      },
+      "latest": {
+        "id": "CN-520100",
+        "pm25": 15,
+        "pm25_24h": 17.1,
+        "aqi": 27,
+        "stations": 9
+      },
+      "cams24h": 14.5,
+      "overlapDays": 1,
+      "bias": 0.4,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-530100",
+      "name": {
+        "zh": "昆明",
+        "en": "Kunming"
+      },
+      "latest": {
+        "id": "CN-530100",
+        "pm25": 23,
+        "pm25_24h": 15.3,
+        "aqi": 41,
+        "stations": 10
+      },
+      "cams24h": 5.3,
+      "overlapDays": 1,
+      "bias": -2.5,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-540100",
+      "name": {
+        "zh": "拉萨",
+        "en": "Lhasa"
+      },
+      "latest": {
+        "id": "CN-540100",
+        "pm25": 5.6,
+        "pm25_24h": 13.5,
+        "aqi": 24,
+        "stations": 5
+      },
+      "cams24h": 11.3,
+      "overlapDays": 1,
+      "bias": 1.8,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-610100",
+      "name": {
+        "zh": "西安",
+        "en": "Xi'an"
+      },
+      "latest": {
+        "id": "CN-610100",
+        "pm25": 138.8,
+        "pm25_24h": 114.5,
+        "aqi": 183,
+        "stations": 13
+      },
+      "cams24h": 80,
+      "overlapDays": 1,
+      "bias": -39.9,
+      "measuredOver75": 1,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-620100",
+      "name": {
+        "zh": "兰州",
+        "en": "Lanzhou"
+      },
+      "latest": {
+        "id": "CN-620100",
+        "pm25": 86.8,
+        "pm25_24h": 75.2,
+        "aqi": 125,
+        "stations": 6
+      },
+      "cams24h": 42.1,
+      "overlapDays": 1,
+      "bias": -25.9,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-630100",
+      "name": {
+        "zh": "西宁",
+        "en": "Xining"
+      },
+      "latest": {
+        "id": "CN-630100",
+        "pm25": 40.3,
+        "pm25_24h": 35.7,
+        "aqi": 61,
+        "stations": 3
+      },
+      "cams24h": 28.2,
+      "overlapDays": 1,
+      "bias": -4.1,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-640100",
+      "name": {
+        "zh": "银川",
+        "en": "Yinchuan"
+      },
+      "latest": {
+        "id": "CN-640100",
+        "pm25": 48.3,
+        "pm25_24h": 68,
+        "aqi": 81,
+        "stations": 6
+      },
+      "cams24h": 43.2,
+      "overlapDays": 1,
+      "bias": -15.3,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-650100",
+      "name": {
+        "zh": "乌鲁木齐",
+        "en": "Urumqi"
+      },
+      "latest": {
+        "id": "CN-650100",
+        "pm25": 4.1,
+        "pm25_24h": 7.5,
+        "aqi": 15,
+        "stations": 9
+      },
+      "cams24h": 22.3,
+      "overlapDays": 1,
+      "bias": 10.4,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-440300",
+      "name": {
+        "zh": "深圳",
+        "en": "Shenzhen"
+      },
+      "latest": {
+        "id": "CN-440300",
+        "pm25": 16.8,
+        "pm25_24h": 10.8,
+        "aqi": 28,
+        "stations": 15
+      },
+      "cams24h": 37.2,
+      "overlapDays": 1,
+      "bias": 19.3,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-370200",
+      "name": {
+        "zh": "青岛",
+        "en": "Qingdao"
+      },
+      "latest": {
+        "id": "CN-370200",
+        "pm25": 54,
+        "pm25_24h": 59.6,
+        "aqi": 86,
+        "stations": 10
+      },
+      "cams24h": 50.9,
+      "overlapDays": 1,
+      "bias": -14.9,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-210200",
+      "name": {
+        "zh": "大连",
+        "en": "Dalian"
+      },
+      "latest": {
+        "id": "CN-210200",
+        "pm25": 50.9,
+        "pm25_24h": 51.3,
+        "aqi": 83,
+        "stations": 10
+      },
+      "cams24h": 42,
+      "overlapDays": 1,
+      "bias": -7.9,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-330200",
+      "name": {
+        "zh": "宁波",
+        "en": "Ningbo"
+      },
+      "latest": {
+        "id": "CN-330200",
+        "pm25": 16,
+        "pm25_24h": 17.8,
+        "aqi": 28,
+        "stations": 8
+      },
+      "cams24h": 53,
+      "overlapDays": 1,
+      "bias": 26.9,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-350200",
+      "name": {
+        "zh": "厦门",
+        "en": "Xiamen"
+      },
+      "latest": {
+        "id": "CN-350200",
+        "pm25": 16.8,
+        "pm25_24h": 19.2,
+        "aqi": 26,
+        "stations": 5
+      },
+      "cams24h": 31,
+      "overlapDays": 1,
+      "bias": 13.6,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-320500",
+      "name": {
+        "zh": "苏州",
+        "en": "Suzhou"
+      },
+      "latest": {
+        "id": "CN-320500",
+        "pm25": 50.9,
+        "pm25_24h": 44.8,
+        "aqi": 80,
+        "stations": 10
+      },
+      "cams24h": 78,
+      "overlapDays": 1,
+      "bias": 31.3,
+      "measuredOver75": 0,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-320200",
+      "name": {
+        "zh": "无锡",
+        "en": "Wuxi"
+      },
+      "latest": {
+        "id": "CN-320200",
+        "pm25": 76.8,
+        "pm25_24h": 56.8,
+        "aqi": 116,
+        "stations": 8
+      },
+      "cams24h": 86.6,
+      "overlapDays": 1,
+      "bias": 38.7,
+      "measuredOver75": 0,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-130200",
+      "name": {
+        "zh": "唐山",
+        "en": "Tangshan"
+      },
+      "latest": {
+        "id": "CN-130200",
+        "pm25": 169.1,
+        "pm25_24h": 149.2,
+        "aqi": 218,
+        "stations": 11
+      },
+      "cams24h": 135.5,
+      "overlapDays": 1,
+      "bias": 13,
+      "measuredOver75": 1,
+      "modelOver75": 1,
+      "measuredDays": 2,
+      "modelDays": 30
+    },
+    {
+      "id": "CN-441900",
+      "name": {
+        "zh": "东莞",
+        "en": "Dongguan"
+      },
+      "latest": {
+        "id": "CN-441900",
+        "pm25": 22.7,
+        "pm25_24h": 25,
+        "aqi": 34,
+        "stations": 6
+      },
+      "cams24h": 57,
+      "overlapDays": 1,
+      "bias": 16.7,
+      "measuredOver75": 0,
+      "modelOver75": 0,
+      "measuredDays": 2,
+      "modelDays": 30
+    }
+  ]
+}

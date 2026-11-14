@@ -1,0 +1,571 @@
+{
+  "city": "CN-440100",
+  "source": "meteostat",
+  "annual": {
+    "2013": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2014": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 364
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2015": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2016": {
+      "total": 366,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 366
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2017": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2018": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2019": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2020": {
+      "total": 366,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 366
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2021": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2022": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2023": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2024": {
+      "total": 366,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 366
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2025": {
+      "total": 365,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 365
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    },
+    "2026": {
+      "total": 318,
+      "status": "200",
+      "valid": {
+        "vis": 0,
+        "rh": 318
+      },
+      "paired": {
+        "1": 0,
+        "8": 0,
+        "18": 0
+      }
+    }
+  },
+  "pmDaily": {},
+  "requests": [
+    {
+      "year": "2013",
+      "status": "200",
+      "ms": 2590
+    },
+    {
+      "year": "2014",
+      "status": "200",
+      "ms": 2833
+    },
+    {
+      "year": "2015",
+      "status": "200",
+      "ms": 3609
+    },
+    {
+      "year": "2016",
+      "status": "200",
+      "ms": 3376
+    },
+    {
+      "year": "2017",
+      "status": "200",
+      "ms": 3151
+    },
+    {
+      "year": "2018",
+      "status": "200",
+      "ms": 3581
+    },
+    {
+      "year": "2019",
+      "status": "200",
+      "ms": 2836
+    },
+    {
+      "year": "2020",
+      "status": "200",
+      "ms": 2608
+    },
+    {
+      "year": "2021",
+      "status": "200",
+      "ms": 3169
+    },
+    {
+      "year": "2022",
+      "status": "200",
+      "ms": 2875
+    },
+    {
+      "year": "2023",
+      "status": "200",
+      "ms": 2656
+    },
+    {
+      "year": "2024",
+      "status": "200",
+      "ms": 5279
+    },
+    {
+      "year": "2025",
+      "status": "200",
+      "ms": 3946
+    },
+    {
+      "year": "2026",
+      "status": "200",
+      "ms": 32241
+    },
+    {
+      "year": "2012",
+      "status": "200",
+      "ms": 1289
+    }
+  ],
+  "raw": [
+    {
+      "year": "2013",
+      "sample": [
+        [
+          "year",
+          "month",
+          "day",
+          "hour",
+          "temp",
+          "temp_source",
+          "rhum",
+          "rhum_source",
+          "prcp",
+          "prcp_source",
+          "wdir",
+          "wdir_source",
+          "wspd",
+          "wspd_source",
+          "wpgt",
+          "wpgt_source",
+          "pres",
+          "pres_source",
+          "cldc",
+          "cldc_source",
+          "coco",
+          "coco_source"
+        ],
+        [
+          "2013",
+          "1",
+          "1",
+          "0",
+          "8.8",
+          "isd_lite",
+          "61",
+          "isd_lite",
+          "",
+          "",
+          "360",
+          "isd_lite",
+          "7.2",
+          "isd_lite",
+          "",
+          "",
+          "1023.7",
+          "isd_lite",
+          "7",
+          "isd_lite",
+          "",
+          ""
+        ],
+        [
+          "2013",
+          "1",
+          "1",
+          "1",
+          "10.0",
+          "isd_lite",
+          "58",
+          "isd_lite",
+          "",
+          "",
+          "100",
+          "isd_lite",
+          "7.2",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "7",
+          "isd_lite",
+          "",
+          ""
+        ],
+        [
+          "2013",
+          "1",
+          "1",
+          "2",
+          "11.0",
+          "isd_lite",
+          "47",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "3.6",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "year": "2014",
+      "sample": [
+        [
+          "year",
+          "month",
+          "day",
+          "hour",
+          "temp",
+          "temp_source",
+          "rhum",
+          "rhum_source",
+          "prcp",
+          "prcp_source",
+          "wdir",
+          "wdir_source",
+          "wspd",
+          "wspd_source",
+          "wpgt",
+          "wpgt_source",
+          "pres",
+          "pres_source",
+          "cldc",
+          "cldc_source",
+          "coco",
+          "coco_source"
+        ],
+        [
+          "2014",
+          "1",
+          "1",
+          "0",
+          "5.8",
+          "isd_lite",
+          "78",
+          "isd_lite",
+          "",
+          "",
+          "320",
+          "isd_lite",
+          "7.2",
+          "isd_lite",
+          "",
+          "",
+          "1022.0",
+          "isd_lite",
+          "0",
+          "isd_lite",
+          "",
+          ""
+        ],
+        [
+          "2014",
+          "1",
+          "1",
+          "1",
+          "10.0",
+          "isd_lite",
+          "58",
+          "isd_lite",
+          "",
+          "",
+          "50",
+          "isd_lite",
+          "3.6",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "0",
+          "isd_lite",
+          "",
+          ""
+        ],
+        [
+          "2014",
+          "1",
+          "1",
+          "2",
+          "14.0",
+          "isd_lite",
+          "44",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "3.6",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "0",
+          "isd_lite",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "year": "2015",
+      "sample": [
+        [
+          "year",
+          "month",
+          "day",
+          "hour",
+          "temp",
+          "temp_source",
+          "rhum",
+          "rhum_source",
+          "prcp",
+          "prcp_source",
+          "wdir",
+          "wdir_source",
+          "wspd",
+          "wspd_source",
+          "wpgt",
+          "wpgt_source",
+          "pres",
+          "pres_source",
+          "cldc",
+          "cldc_source",
+          "coco",
+          "coco_source"
+        ],
+        [
+          "2015",
+          "1",
+          "1",
+          "0",
+          "9.5",
+          "isd_lite",
+          "68",
+          "isd_lite",
+          "",
+          "",
+          "340",
+          "isd_lite",
+          "14.4",
+          "isd_lite",
+          "",
+          "",
+          "1027.0",
+          "isd_lite",
+          "0",
+          "isd_lite",
+          "",
+          ""
+        ],
+        [
+          "2015",
+          "1",
+          "1",
+          "1",
+          "15.0",
+          "isd_lite",
+          "33",
+          "isd_lite",
+          "",
+          "",
+          "40",
+          "isd_lite",
+          "10.8",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "2015",
+          "1",
+          "1",
+          "2",
+          "17.0",
+          "isd_lite",
+          "25",
+          "isd_lite",
+          "",
+          "",
+          "40",
+          "isd_lite",
+          "25.2",
+          "isd_lite",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    }
+  ]
+}
