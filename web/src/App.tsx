@@ -15,7 +15,7 @@ import type {
   SeriesResponse,
   StatsResponse,
 } from "../../shared/types.ts";
-import { api } from "./api.ts";
+import { api, isStaticSite } from "./api.ts";
 import { Chart, type DisplayData } from "./Chart.tsx";
 import type { Basis, ChartKind, Theme } from "./charts.ts";
 import { ExportDialog } from "./ExportDialog.tsx";
@@ -507,6 +507,7 @@ export function App() {
             ))}
           </ul>
           <p>{t("recentInfo")}</p>
+          {isStaticSite && <p>{t("staticSiteNote")}</p>}
         </main>
       ) : (
         <main className="shell">
@@ -518,6 +519,7 @@ export function App() {
               </div>
               <h1>{t("heading", { city: city.name[lang] })}</h1>
               <p>{t("intro")}</p>
+              {isStaticSite && <p>{t("staticSiteNote")}</p>}
               <Search lang={lang} onSelect={selectCity} />
               <div className="popular" aria-label={t("cities")}>
                 {popular.map((item) => (

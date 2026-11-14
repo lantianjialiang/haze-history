@@ -1,7 +1,8 @@
 import { useEffect, useId, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { geocode } from "../../shared/geocode.ts";
 import type { CityRef } from "../../shared/types.ts";
-import { api } from "./api.ts";
+import { api, isStaticSite } from "./api.ts";
 import { Icon } from "./icons.tsx";
 
 export function Search({
@@ -28,6 +29,10 @@ export function Search({
     if (!query || !open) return;
     const controller = new AbortController();
     const timer = window.setTimeout(() => {
+      if (isStaticSite) {
+        setResults({ query, cities: geocode(query) });
+        return;
+      }
       api<CityRef[]>(
         "/geocode?q=" + encodeURIComponent(query),
         controller.signal,

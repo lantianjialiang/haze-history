@@ -44,6 +44,7 @@
   "allCities": "All cities",
   "intro": "Haze days across China’s major cities, compared by particulate pollution and local weather.",
   "recentInfo": "The default source is the CNEMC hourly archive: national cities from 13 May 2014, Beijing from 6 December 2013. Files come from the quotsoft compilation of the published national network. A day uses the hourly mean when 12 hours exist, otherwise the last 24-hour average. Earlier dates stay missing. CAMS is a model comparison only. The weather definition may still have no data.",
+  "staticSiteNote": "Static build: charts are baked in at build time. To refresh data locally, run npm run data:update and npm run build:static, then npm run preview:static. No Node API server is required.",
   "compareLead": "Latest CNEMC hour for 40 cities, and the CAMS daily-mean bias on overlapping days. Bias is model minus measurement.",
   "compareEmpty": "The comparison table has not been generated.",
   "colCity": "City",

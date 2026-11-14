@@ -44,6 +44,7 @@
   "allCities": "全部城市",
   "intro": "查看中国大中城市历年雾霾天数，并排比较空气质量与气象口径。",
   "recentInfo": "默认源是监测总站历史归档：全国城市自 2014-05-13，北京自 2013-12-06。小时值来自 quotsoft 对总站发布数据的整理。一天满 12 个小时用算术日均，否则用当日最后一次 24 小时均值。更早日期仍是无数据。CAMS 只作模型对照。气象口径仍可能无数据。",
+  "staticSiteNote": "当前为静态站点：图表数据在构建时已打包。更新数据请在本机项目根目录依次运行 npm run data:update 与 npm run build:static，再用 npm run preview:static 预览。不需要常驻 Node API。",
   "compareLead": "40 城最近一次总站小时值，以及和 CAMS 日均重叠日期的偏差。偏差 = 模型减实测。",
   "compareEmpty": "对照表还没有生成。",
   "colCity": "城市",

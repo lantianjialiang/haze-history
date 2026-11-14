@@ -9,6 +9,7 @@ data/cn-air/
 data/archive/
 data/update-logs/
 data/embassy/
+web/public/data/
 playwright-report/
 test-results/
 *.log

@@ -10,14 +10,19 @@ import {
 import { registerEmbassy } from "./embassy.ts";
 import { HistoryStore, historyPath, registerHistory } from "./quotsoft.ts";
 
-export function createLocalApp() {
-  const root = fileURLToPath(new URL("../", import.meta.url));
-  const path = process.env.CACHE_PATH ?? "data/haze.sqlite";
+export function createRegistry(root: string) {
   const registry = new ProviderRegistry();
   registerRecent(registry, root);
   registerXianVisibility(registry, root);
   registerHistory(registry, root);
   registerEmbassy(registry, root);
+  return registry;
+}
+
+export function createLocalApp() {
+  const root = fileURLToPath(new URL("../", import.meta.url));
+  const path = process.env.CACHE_PATH ?? "data/haze.sqlite";
+  const registry = createRegistry(root);
   const app = buildApp({
     cachePath: path === ":memory:" ? path : resolve(root, path),
     ttlHours: Number(process.env.CACHE_TTL_HOURS ?? 12),
