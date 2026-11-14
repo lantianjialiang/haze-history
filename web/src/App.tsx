@@ -882,7 +882,6 @@ export function App() {
             {copyright}
           </a>
         </div>
-        <p className="site-attribution">{t("attribution")}</p>
       </footer>
       {exportTarget && (
         <ExportDialog

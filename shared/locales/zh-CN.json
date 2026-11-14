@@ -117,7 +117,7 @@
   "period": "时段",
   "basis": "判定口径",
   "footer": "日期和日级聚合采用 Asia/Shanghai 时区。",
-  "attribution": "空气质量观测来自中国环境监测总站公开发布数据，由 quotsoft / CN-AIR 归档。CAMS 模式数据 © Copernicus Atmosphere Monitoring Service，经 Open-Meteo 提供。网站代码 © 2026 @lantianjialiang，MIT 许可。",
+  "attribution": "空气质量观测来自中国环境监测总站公开发布数据，由 quotsoft / CN-AIR 归档。CAMS 模式数据 © Copernicus Atmosphere Monitoring Service，经 Open-Meteo 提供。",
   "notesIntro": "两个口径分别统计雾霾天数。满足所选条件的日期计作雾霾日。",
   "modelNotes": "实测数据反映监测站点的观测值，模型数据估计网格内的环境状况。站点距离、局部污染源和模型分辨率会影响对比。",
   "thresholdNotes": "PM2.5 和 AQI 预设是本网站的统计阈值。中国 75 μg/m³ 预设采用历史标准 GB 3095–2012。美国 EPA 和世卫预设采用其 24 小时限值或指南值。气象预设为能见度低于 10 km 且相对湿度低于 90%。",

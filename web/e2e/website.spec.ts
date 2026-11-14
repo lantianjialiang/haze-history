@@ -16,10 +16,21 @@ for (const lang of ["zh-CN", "en"] as const) {
       zh ? "年雾霾合计" : "haze days",
     );
     await expect(page.locator(".calendar-summary")).toContainText("> 75");
-    await expect(page.locator(".site-attribution")).toContainText(
+    await expect(page.locator(".site-footer")).toContainText("MIT License");
+    await expect(page.locator(".site-footer")).not.toContainText(
       zh ? "中国环境监测总站" : "CNEMC",
     );
-    await expect(page.locator(".site-footer")).toContainText("MIT License");
+    await page
+      .getByRole("navigation")
+      .getByRole("link", { name: zh ? "数据说明" : "Data notes" })
+      .click();
+    await expect(page.locator("main.notes")).toContainText(
+      zh ? "中国环境监测总站" : "CNEMC",
+    );
+    await page
+      .getByRole("navigation")
+      .getByRole("link", { name: zh ? "统计" : "Explore" })
+      .click();
     const search = page.getByRole("combobox", {
       name: zh ? "查找城市" : "Find a city",
     });

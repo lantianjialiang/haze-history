@@ -174,7 +174,6 @@ export async function exportImage(
     footer.push(t("airportVisibilityNote"));
   }
   if (options.includeWatermark) footer.push(t("brand"));
-  footer.push(t("attribution"));
   footer.push(copyright);
   font(15);
   const footerLines = footer.flatMap((line) => wrap(ctx, line, inner));

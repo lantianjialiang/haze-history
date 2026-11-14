@@ -117,7 +117,7 @@
   "period": "Period",
   "basis": "Definition",
   "footer": "Dates and daily aggregation use Asia/Shanghai.",
-  "attribution": "Air-quality observations are from CNEMC public releases, archived by quotsoft / CN-AIR. CAMS model data © Copernicus Atmosphere Monitoring Service, via Open-Meteo. Site code © 2026 @lantianjialiang, MIT License.",
+  "attribution": "Air-quality observations are from CNEMC public releases, archived by quotsoft / CN-AIR. CAMS model data © Copernicus Atmosphere Monitoring Service, via Open-Meteo.",
   "notesIntro": "Haze days are counted separately under each definition. A day counts when the selected conditions are met.",
   "modelNotes": "Measured data describes a monitoring site. Model data estimates conditions over a grid cell. Station distance, local sources and model resolution can affect comparisons.",
   "thresholdNotes": "The PM2.5 and AQI values are analysis thresholds. China’s 75 μg/m³ preset uses the historical GB 3095–2012 limit. The US EPA and WHO presets use their 24-hour values. The weather preset uses visibility below 10 km and relative humidity below 90%.",

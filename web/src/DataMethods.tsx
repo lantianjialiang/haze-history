@@ -33,6 +33,7 @@ export function DataMethods() {
   return (
     <>
       <h2>{t("dataMethods")}</h2>
+      <p>{t("attribution")}</p>
       <dl>
         {(
           [

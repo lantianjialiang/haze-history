@@ -714,8 +714,6 @@ th {
   margin: 12px 0;
 }
 .site-footer {
-  display: grid;
-  gap: 8px;
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 12px;
@@ -727,11 +725,6 @@ th {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 12px;
-}
-.site-attribution {
-  margin: 0;
-  max-width: 52rem;
-  line-height: 1.55;
 }
 dialog {
   border: 1px solid var(--line);
