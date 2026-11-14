@@ -8,7 +8,7 @@ data/*.sqlite-shm
 data/cn-air/
 data/archive/
 data/update-logs/
-data/embassy/
+#data/embassy/
 web/public/data/
 playwright-report/
 test-results/
